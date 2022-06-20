@@ -3,12 +3,10 @@ import java.util.List;
 import java.util.Scanner;
 
 class Palavra {
-    boolean isPt;
     String en;
     String pt;
 
     public Palavra(String en, String pt) {
-        this.isPt = true;
         this.en = en;
         this.pt = pt;
     }
@@ -52,5 +50,6 @@ public class Exercicio6 {
         if(!encontrei){
             System.out.println("Essa palavra não é válida");
         }
+        scanner.close();
     }
 }

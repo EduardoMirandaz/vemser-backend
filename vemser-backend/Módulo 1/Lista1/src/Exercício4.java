@@ -42,23 +42,30 @@ public class Exercício4 {
         Cidade saoCarlos = new Cidade("São Carlos", 0.805, 280513, "Tusca");
         Cidade guarulhos = new Cidade("Guarulhos", 	0.763, 1379568, "Nossa Senhora do Rocio");
         Estado saoPaulo = new Estado("São Paulo", List.of(saoCarlos, guarulhos));
+
+        // Adicionando os estados em uma lista vazia de Estados
         List<Estado> estados = new ArrayList<>();
         estados.add(espiritoSanto);
         estados.add(parana);
         estados.add(saoPaulo);
+        // Exibindo os estados possíveis
         System.out.println("Selecione um Estado entre:");
         for (Estado estado : estados) {
             System.out.println(estado.nome);
         }
+        // Pedindo um estado de entrada para o usuário;
         Scanner scanner = new Scanner(System.in);
         String escolhaEstado = scanner.nextLine();
         Estado estadoEscolhido = null;
+        // Se há um estado com o nome que o usuário digitou na minha lista de estados
+        // atribuo ele para meu estadoEscolhido.
         for (Estado estado : estados) {
             if(estado.nome.equals(escolhaEstado)){
                 estadoEscolhido = estado;
                 break;
             }
         }
+        // Se não há, exibo escolha inválida.
         if(estadoEscolhido == null){
             System.out.println("Escolha inválida!");
             return;
@@ -84,5 +91,6 @@ public class Exercício4 {
         System.out.println("IDH :: " + cidadeEscolhida.idh);
         System.out.println("População :: " + cidadeEscolhida.populacao);
         System.out.println("Principal festa :: "+ cidadeEscolhida.principalFesta);
+        scanner.close();
     }
 }
