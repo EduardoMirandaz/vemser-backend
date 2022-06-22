@@ -5,15 +5,13 @@ public class ContaCorrente {
     String numeroConta;
     int agencia;
     double saldo;
-    double chequeEspecialInicial;
     double chequeEspecial;
 
-    public ContaCorrente(Cliente cliente, String numeroConta, int agencia, double saldo, double chequeEspecialInicial, double chequeEspecial) {
+    public ContaCorrente(Cliente cliente, String numeroConta, int agencia, double saldo, double chequeEspecial) {
         this.cliente = cliente;
         this.numeroConta = numeroConta;
         this.agencia = agencia;
         this.saldo = saldo;
-        this.chequeEspecialInicial = chequeEspecialInicial;
         this.chequeEspecial = chequeEspecial;
     }
 
@@ -36,11 +34,15 @@ public class ContaCorrente {
             return true;
         }
         else{
-            if(saldo + chequeEspecial - valor >= 0){
+            if(this.retornarSaldoComChequeEspecial() - valor >= 0){
                 System.out.println("Realizando um saque utilizando o cheque especial!");
                 saldo = saldo-valor;
-                chequeEspecial = chequeEspecial - (0 - saldo);
-                return true;
+                if(saldo >= (-1)*chequeEspecial){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             }
         }
         System.out.println("Não foi possível realizar um saque!");
@@ -48,20 +50,12 @@ public class ContaCorrente {
     }
     public boolean depositar(double valor){
         System.out.println("Depositando!");
-        if(valor < 0){
-            return false
+        if(valor <= 0){
+            System.out.printf("Não é possível depositar R$%.2f", valor);
+            return false;
         }
-        if(chequeEspecial < chequeEspecialInicial){
-            chequeEspecial+=valor;
-        }
-        if(chequeEspecial > chequeEspecialInicial){
-            saldo += chequeEspecial-chequeEspecialInicial;
-            chequeEspecial = chequeEspecialInicial;
-        }
-        else{
-            saldo+= valor;
-        }
-
+        saldo += valor;
+        System.out.printf("R$%.2f depositados!", valor);
         return true;
     }
     public double retornarSaldoComChequeEspecial(){
@@ -70,15 +64,13 @@ public class ContaCorrente {
     }
     public boolean transferir(ContaCorrente contaCorrente, double valor){
         System.out.println("Transferindo!");
-        if(valor < 0){
+        if(valor <= 0){
+            System.out.printf("Não é possível transferir R$%.2f", valor);
             return false;
         }
-        if(this.saldo + this.chequeEspecial >= valor){
+        if(this.retornarSaldoComChequeEspecial() >= valor){
             System.out.printf("Enviando %.2f de %s para %s", valor, this.cliente.nome, contaCorrente.cliente.nome);
             this.saldo -= valor;
-            if(this.saldo < 0){
-                chequeEspecial -= (0-this.saldo);
-            }
             contaCorrente.saldo += valor;
             return true;
         }

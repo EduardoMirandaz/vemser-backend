@@ -23,8 +23,40 @@ public class Main {
         Cliente cEdu0001 = new Cliente("Eduardo Miranda", "546.444.879-12", cContatosEduardo, eEnderecosEduardo);
         Cliente cFla0001 = new Cliente("Flavio Bodao", "942.425.001-19", cContatosFlavio, eEnderecosFlavio);
 
-        ContaCorrente ccEdu0001 = new ContaCorrente(cEdu0001, "19325-9", 921, 3000, 200, 200);
-        ContaCorrente ccFla0001 = new ContaCorrente(cFla0001, "57964-0", 7198, 2500, 1000, 1000);
+        ContaCorrente ccEdu0001 = new ContaCorrente(cEdu0001, "19325-9", 921, 3000, 200);
+        ContaCorrente ccFla0001 = new ContaCorrente(cFla0001, "57964-0", 7198, 2500, 1000);
+
+        // Verifica conta por conta e todos os atributos se são nulos
+        ContaCorrente[] listaDeContasParaVerificacao = new ContaCorrente[]{ccEdu0001, ccFla0001};
+        for (ContaCorrente contaASerVerificada : listaDeContasParaVerificacao) {
+            if (contaASerVerificada == null) {
+                return;
+            }
+            else
+            {
+                if (contaASerVerificada.numeroConta == null ||
+                        contaASerVerificada.cliente == null ||
+                        contaASerVerificada.cliente.nome == null ||
+                        contaASerVerificada.cliente.cpf == null ||
+                        contaASerVerificada.cliente.enderecos == null ||
+                        contaASerVerificada.cliente.contatos == null)
+                {
+                    return;
+                }
+                else {
+                    for (Endereco enderecoParaVerificacao : contaASerVerificada.cliente.enderecos) {
+                        if (enderecoParaVerificacao == null) {
+                            return;
+                        }
+                        for (Contato contatoParaVerificacao : contaASerVerificada.cliente.contatos) {
+                            if (contatoParaVerificacao == null) {
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         System.out.println("=-=-=-=-CONTAS CORRENTES CADASTRADAS=-=-=-=-\n");
 
 //        Aqui temos uma transação inválida
