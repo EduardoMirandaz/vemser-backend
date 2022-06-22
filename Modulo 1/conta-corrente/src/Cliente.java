@@ -15,14 +15,18 @@ public class Cliente {
         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=\n");
         System.out.printf("=-=-=-=-=-=-=-=-\nimprimindo contatos de %s\n", nome);
         for (Contato contato : contatos) {
-            contato.imprimirContato();
+            if(contato != null){
+                contato.imprimirContato();
+            }
         }
     }
     public void imprimirEnderecos(){
         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=\n");
         System.out.printf("=-=-=-=-=-=-=-=-\nimprimindo enderecos de %s\n", nome);
         for (Endereco endereco : enderecos) {
-            endereco.imprimirEndereco();
+            if(endereco != null){
+                endereco.imprimirEndereco();
+            }
         }
     }
     public void imprimirCliente(){
