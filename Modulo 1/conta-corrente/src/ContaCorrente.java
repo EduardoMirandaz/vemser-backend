@@ -1,5 +1,5 @@
 public class ContaCorrente {
-    // a variável cheque especial inicial não é manipulada
+    // a variável cheque especial não é manipulada
 
     Cliente cliente;
     String numeroConta;
