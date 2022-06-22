@@ -33,6 +33,7 @@ public class Exercicio2 {
 
         if(ehNotaValida(nota))
         {
+            System.out.println("A média final foi: "+ nota);
             if(nota < 7)
             {
                 if(nota <= 5)
