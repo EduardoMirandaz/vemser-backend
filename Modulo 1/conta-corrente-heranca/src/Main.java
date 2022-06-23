@@ -108,7 +108,7 @@ public class Main {
          *******************************************
          */
 
-        System.out.println("=-=-=-=-CONTAS CORRENTES CADASTRADAS=-=-=-=-\n");
+        System.out.println("=-=-=-=-CONTAS CORRENTE CADASTRADAS=-=-=-=-\n");
 
 //        Aqui temos uma transação inválida
         ccEdu0001.transferir(ccFla0001, 4000);
@@ -144,7 +144,7 @@ public class Main {
          *******************************************
          */
 
-        System.out.println("=-=-=-=-CONTAS CORRENTES CADASTRADAS=-=-=-=-\n");
+        System.out.println("=-=-=-=-CONTAS POUPANCA CADASTRADAS=-=-=-=-\n");
 
 //        Aqui temos uma transação inválida
         cpGus0001.transferir(cpGus0001, 544000);
