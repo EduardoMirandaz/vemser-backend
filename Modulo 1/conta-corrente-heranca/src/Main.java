@@ -1,6 +1,6 @@
 public class Main {
     public static void main(String[] args) {
-        /*** CRIANDO CONTATOS ***/
+        /*** +++++++++ CRIANDO CONTATOS +++++++++ ***/
         Contato contato1 = new Contato("Eduardo Whats", "22656499856", 1);
         Contato contato2 = new Contato("Joao Victor novo", "11589786453", 1);
         Contato contato3 = new Contato("Mariana BCC", "21998754623", 1);
@@ -9,16 +9,13 @@ public class Main {
         Contato contato6 = new Contato("Raquel novo", "11589786453", 2);
         Contato contato7 = new Contato("Ivan BCC", "546879623", 1);
         Contato contato8 = new Contato("Thainá Cafeteria", "28998543225", 2);
-
         /*** COLOCANDO CONTATOS NAS LISTAS DE CONTATOS ***/
         Contato[] cContatosEduardo = new Contato[]{contato1, contato2};
         Contato[] cContatosFlavio = new Contato[]{contato3, contato4};
         Contato[] cContatosGustavo = new Contato[]{contato5, contato6};
         Contato[] cContatosIvan = new Contato[]{contato7, contato8};
 
-
-        /*** CRIANDO ENDERECOS ***/
-
+        /*** +++++++++ CRIANDO ENDERECOS +++++++++ ***/
         Endereco endereco1 = new Endereco(1,"Avenida Joao Dos Santos", 32, "Ao lado da casa verde",
                 "23.023-49", "Bauru", "São Paulo", "Brasil");
         Endereco endereco2 = new Endereco(2,"Rua Alameda dos Crisantemos", 62, "Em frente ao restaurante Comer Bem",
@@ -43,24 +40,17 @@ public class Main {
         Endereco[] eEnderecosGustavo = new Endereco[]{endereco5, endereco6};
         Endereco[] eEnderecosIvan = new Endereco[]{endereco7, endereco8};
 
-        /*** CRIANDO CLIENTES ***/
+        /*** +++++++++ CRIANDO CLIENTES +++++++++ ***/
         Cliente cEdu0001 = new Cliente("Eduardo Miranda", "546.444.879-12", cContatosEduardo, eEnderecosEduardo);
         Cliente cFla0001 = new Cliente("Flavio Bodao", "942.425.001-19", cContatosFlavio, eEnderecosFlavio);
         Cliente cGus0001 = new Cliente("Gustavo Valadao", "666.245.871-12", cContatosGustavo, eEnderecosGustavo);
         Cliente cIva0001 = new Cliente("Ivan Jhonson", "642.400.012-12", cContatosIvan, eEnderecosIvan);
 
-        /*** CRIANDO CONTAS ***/
+        /*** +++++++++ CRIANDO CONTAS +++++++++ ***/
         ContaCorrente ccEdu0001 = new ContaCorrente(cEdu0001, "19325-9", "921", 3000, 200);
         ContaCorrente ccFla0001 = new ContaCorrente(cFla0001, "57964-0", "7198", 2500, 1000);
         ContaPoupanca cpGus0001 = new ContaPoupanca(cGus0001, "1231412", "512512", 87223);
         ContaPoupanca cpIva0001 = new ContaPoupanca(cIva0001, "997543", "9050552", 10002456);
-
-
-
-
-
-
-
 
 
         /**
@@ -79,19 +69,19 @@ public class Main {
             {
                 if (contaASerVerificada.numeroConta == null ||
                         contaASerVerificada.cliente == null ||
-                        contaASerVerificada.cliente.nome == null ||
-                        contaASerVerificada.cliente.cpf == null ||
-                        contaASerVerificada.cliente.enderecos == null ||
-                        contaASerVerificada.cliente.contatos == null)
+                        contaASerVerificada.cliente.getNome() == null ||
+                        contaASerVerificada.cliente.getCpf() == null ||
+                        contaASerVerificada.cliente.getEnderecos() == null ||
+                        contaASerVerificada.cliente.getContatos() == null)
                 {
                     return;
                 }
                 else {
-                    for (Endereco enderecoParaVerificacao : contaASerVerificada.cliente.enderecos) {
+                    for (Endereco enderecoParaVerificacao : contaASerVerificada.cliente.getEnderecos()) {
                         if (enderecoParaVerificacao == null) {
                             return;
                         }
-                        for (Contato contatoParaVerificacao : contaASerVerificada.cliente.contatos) {
+                        for (Contato contatoParaVerificacao : contaASerVerificada.getCliente().getContatos()) {
                             if (contatoParaVerificacao == null) {
                                 return;
                             }
@@ -100,7 +90,6 @@ public class Main {
                 }
             }
         }
-
 
         /*
          *******************************************
@@ -147,7 +136,7 @@ public class Main {
         System.out.println("=-=-=-=-CONTAS POUPANCA CADASTRADAS=-=-=-=-\n");
 
 //        Aqui temos uma transação inválida
-        cpGus0001.transferir(cpGus0001, 544000);
+        cpGus0001.transferir(cpGus0001, 544100000);
         cpIva0001.imprimir();
         cpGus0001.imprimir();
 //        Aqui temos uma transação válida
@@ -175,6 +164,5 @@ public class Main {
 //        Aqui temos um deposito negativo inválido
         cpGus0001.depositar(-3050);
         cpGus0001.imprimir();
-
     }
 }

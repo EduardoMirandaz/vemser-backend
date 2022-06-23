@@ -1,8 +1,8 @@
 public class Cliente {
-    String nome;
-    String cpf;
-    Contato[] contatos;
-    Endereco[] enderecos;
+    private String nome;
+    private String cpf;
+    private Contato[] contatos;
+    private Endereco[] enderecos;
 
     public Cliente(String nome, String cpf, Contato[] contatos, Endereco[] enderecos) {
         this.nome = nome;

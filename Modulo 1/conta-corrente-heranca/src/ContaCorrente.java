@@ -5,10 +5,6 @@ public class ContaCorrente extends Conta implements Impressao{
         return this.getSaldo()+chequeEspecial;
     }
 
-    public double getChequeEspecial() {
-        return chequeEspecial;
-    }
-
     public void setChequeEspecial(double chequeEspecial) {
         this.chequeEspecial = chequeEspecial;
     }
@@ -20,7 +16,7 @@ public class ContaCorrente extends Conta implements Impressao{
 
     @Override
     public boolean sacar(double valor){
-        System.out.printf("\n[Tentando sacar R$%.2f da conta de %s]\n", valor, cliente.nome);
+        System.out.printf("\n[Tentando sacar R$%.2f da conta de %s]\n", valor, getCliente().getNome());
         if(saldo <= 0){
             System.out.println("=-=-=-=-=-=-=-=-=-=\nSaque inválido!\n=-=-=-=-=-=-=-=-=-=");
             return false;
@@ -51,7 +47,7 @@ public class ContaCorrente extends Conta implements Impressao{
     public void imprimir() {
         cliente.imprimirCliente();
         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=\n");
-        System.out.printf("\nCONTA DE %s\n", cliente.nome);
+        System.out.printf("\nCONTA DE %s\n", getCliente().getNome());
         System.out.printf("\t\tNúmero da conta: %s | Agência: %s\n", numeroConta, agencia);
         System.out.printf("\t\tSaldo ->R$%.2f\n\t\tCheque especial ->R$%.2f\n", saldo, chequeEspecial);
     }

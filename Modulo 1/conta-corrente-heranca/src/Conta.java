@@ -46,7 +46,7 @@ public abstract class Conta implements Movimentacao{
 
     @Override
     public boolean sacar(double valor){
-        System.out.printf("\n[Tentando sacar R$%.2f da conta de %s]\n", valor, cliente.nome);
+        System.out.printf("\n[Tentando sacar R$%.2f da conta de %s]\n", valor, getCliente().getNome());
         if(saldo <= 0){
             System.out.println("=-=-=-=-=-=-=-=-=-=\nSaque inválido!\n=-=-=-=-=-=-=-=-=-=");
             return false;
@@ -67,25 +67,21 @@ public abstract class Conta implements Movimentacao{
             return false;
         }
         saldo += valor;
-        System.out.printf("R$%.2f depositados na conta de %s!\n", valor, cliente.nome);
+        System.out.printf("R$%.2f depositados na conta de %s!\n", valor, getCliente().getNome());
         return true;
     }
     @Override
     public boolean transferir(Conta conta, double valor) {
         System.out.println("Transferindo!");
-        if (valor <= 0) {
+        // se as operacoes de saque ou de depósito derem errado não deveria ser possível transferir.
+        if (!this.sacar(valor) || !conta.depositar(valor)) {
             System.out.printf("Não é possível transferir R$%.2f", valor);
             return false;
         }
-        if (this.getSaldo() >= valor) {
-            System.out.printf("Enviando %.2f de %s para %s\n", valor, this.cliente.nome, conta.cliente.nome);
-            this.setSaldo(this.getSaldo() - valor);
-            conta.setSaldo(conta.getSaldo() + valor);
-            return true;
-        } else {
-            System.out.println("Impossível transferir essa quantia :(");
-            return false;
-        }
+
+        System.out.printf("Enviando %.2f de %s para %s\n", valor, this.getCliente().getNome(), conta.getCliente().getNome());
+        conta.depositar(valor);
+        return true;
 
     }
 

@@ -13,7 +13,7 @@ public class ContaPoupanca extends Conta implements Impressao{
     public void imprimir(){
         cliente.imprimirCliente();
         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=\n");
-        System.out.printf("\nCONTA POUPANCA DE %s\n", cliente.nome);
+        System.out.printf("\nCONTA POUPANCA DE %s\n", getCliente().getNome());
         System.out.printf("\t\tNúmero da conta: %s | Agência: %s\n", numeroConta, agencia);
         System.out.printf("\t\tSaldo ->R$%.2f\n", saldo);
     }
