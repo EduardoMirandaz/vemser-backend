@@ -24,23 +24,24 @@ public class ContaCorrente {
     }
     public boolean sacar(double valor){
         System.out.printf("\n[Tentando sacar R$%.2f da conta de %s]\n", valor, cliente.nome);
-        if(saldo < 0 || chequeEspecial < 0){
+        if(saldo <= 0){
             System.out.println("=-=-=-=-=-=-=-=-=-=\nSaque inválido!\n=-=-=-=-=-=-=-=-=-=");
             return false;
         }
         if(saldo - valor >= 0){
-            System.out.printf("Realizando um saque simples!");
+            System.out.print("Realizando um saque simples!");
             saldo -= valor;
             return true;
         }
         else{
             if(this.retornarSaldoComChequeEspecial() - valor >= 0){
-                System.out.println("Realizando um saque utilizando o cheque especial!");
                 saldo = saldo-valor;
                 if(saldo >= (-1)*chequeEspecial){
+                    System.out.println("Realizando um saque utilizando o cheque especial!");
                     return true;
                 }
                 else{
+                    saldo = saldo + valor;
                     return false;
                 }
             }
