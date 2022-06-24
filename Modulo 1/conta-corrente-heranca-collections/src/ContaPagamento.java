@@ -21,8 +21,6 @@ public class ContaPagamento extends Conta implements Impressao{
             return false;
         }
         System.out.printf("Enviando %.2f de %s para %s\n", valor, this.getCliente().getNome(), conta.getCliente().getNome());
-        this.sacar(valor, true);
-        conta.depositar(valor);
         return true;
     }
 

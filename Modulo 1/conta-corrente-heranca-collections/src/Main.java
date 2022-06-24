@@ -65,9 +65,10 @@ public class Main {
          **/
 
         // Verifica conta por conta se há algum atributo nulo, pensando em futuras modificações de input.
-        Conta[] listaDeContasParaVerificacao = new Conta[]{ccEdu0001, ccFla0001, cpGus0001, cpIva0001};
+        Conta[] listaDeContasParaVerificacao = new Conta[]{ccEdu0001, ccFla0001, cpGus0001, cpIva0001, cpagEdu0001};
         for (Conta contaASerVerificada : listaDeContasParaVerificacao) {
             if (contaASerVerificada == null) {
+                System.out.println("Houve inconsistência na criação de alguma conta");
                 return;
             }
             else
@@ -79,15 +80,18 @@ public class Main {
                         contaASerVerificada.cliente.getEnderecos() == null ||
                         contaASerVerificada.cliente.getContatos() == null)
                 {
+                    System.out.println("Houve inconsistência na criação de alguma conta");
                     return;
                 }
                 else {
                     for (Endereco enderecoParaVerificacao : contaASerVerificada.cliente.getEnderecos()) {
                         if (enderecoParaVerificacao == null) {
+                            System.out.println("Houve inconsistência na atribuição de algum endereço");
                             return;
                         }
                         for (Contato contatoParaVerificacao : contaASerVerificada.getCliente().getContatos()) {
                             if (contatoParaVerificacao == null) {
+                                System.out.println("Houve inconsistência na atribuição de algum contato");
                                 return;
                             }
                         }
