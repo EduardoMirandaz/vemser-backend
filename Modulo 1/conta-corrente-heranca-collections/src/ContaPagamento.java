@@ -1,16 +1,19 @@
 public class ContaPagamento extends Conta implements Impressao{
-    static final double TAXA_SAQUE = 1.0425;
+    static final double TAXA_SAQUE = 4.25;
 
     public ContaPagamento(Cliente cliente, String numeroConta, String agencia, double saldo) {
         super(cliente, numeroConta, agencia, saldo);
     }
 
     public boolean sacar(double valor) {
-        return super.sacar(valor*TAXA_SAQUE);
+        return super.sacar(valor+TAXA_SAQUE);
     }
 
     public boolean sacar(double valor, boolean ehTransferencia) {
-        return super.sacar(valor);
+        if(ehTransferencia){
+            return super.sacar(valor);
+        }
+        return sacar(valor);
     }
 
     @Override
