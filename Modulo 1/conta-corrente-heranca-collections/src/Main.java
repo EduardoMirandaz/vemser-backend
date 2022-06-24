@@ -1,10 +1,9 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        /*** +++++++++ CRIANDO CONTATOS +++++++++ ***/
+        /* +++++++++ CRIANDO CONTATOS +++++++++ ***/
         Contato contato1 = new Contato("Eduardo Whats", "22656499856", 1);
         Contato contato2 = new Contato("Joao Victor novo", "11589786453", 1);
         Contato contato3 = new Contato("Mariana BCC", "21998754623", 1);
@@ -13,14 +12,14 @@ public class Main {
         Contato contato6 = new Contato("Raquel novo", "11589786453", 2);
         Contato contato7 = new Contato("Ivan BCC", "546879623", 1);
         Contato contato8 = new Contato("Thainá Cafeteria", "28998543225", 2);
-        /*** COLOCANDO CONTATOS NAS LISTAS DE CONTATOS ***/
+        /* COLOCANDO CONTATOS NAS LISTAS DE CONTATOS */
 
         List<Contato> cContatosEduardo = new ArrayList<>(List.of(contato1, contato2));
         List<Contato> cContatosFlavio = new ArrayList<>(List.of(contato3, contato4));
         List<Contato> cContatosGustavo = new ArrayList<>(List.of(contato5, contato6));
         List<Contato> cContatosIvan = new ArrayList<>(List.of(contato7, contato8));
 
-        /*** +++++++++ CRIANDO ENDERECOS +++++++++ ***/
+        /* +++++++++ CRIANDO ENDERECOS +++++++++ */
         Endereco endereco1 = new Endereco(1,"Avenida Joao Dos Santos", 32, "Ao lado da casa verde",
                 "23.023-49", "Bauru", "São Paulo", "Brasil");
         Endereco endereco2 = new Endereco(2,"Rua Alameda dos Crisantemos", 62, "Em frente ao restaurante Comer Bem",
@@ -38,20 +37,20 @@ public class Main {
         Endereco endereco8 = new Endereco(1,"Nogueira de Oliveira", 80, "Ao lado do DIA",
                 "29.300-00", "Guarapari", "Espírito Santo", "Brasil");
 
-        /*** COLOCANDO ENDERECOS NAS LISTAS DE ENDERECOS ***/
+        /* COLOCANDO ENDERECOS NAS LISTAS DE ENDERECOS */
 
-        List<Endereco> eEnderecosEduardo = new ArrayList<Endereco>(List.of(endereco1, endereco2));
-        List<Endereco> eEnderecosFlavio = new ArrayList<Endereco>(List.of(endereco3, endereco4));
-        List<Endereco> eEnderecosGustavo = new ArrayList<Endereco>(List.of(endereco5, endereco6));
-        List<Endereco> eEnderecosIvan = new ArrayList<Endereco>(List.of(endereco7, endereco8));
+        List<Endereco> eEnderecosEduardo = new ArrayList<>(List.of(endereco1, endereco2));
+        List<Endereco> eEnderecosFlavio = new ArrayList<>(List.of(endereco3, endereco4));
+        List<Endereco> eEnderecosGustavo = new ArrayList<>(List.of(endereco5, endereco6));
+        List<Endereco> eEnderecosIvan = new ArrayList<>(List.of(endereco7, endereco8));
 
-        /*** +++++++++ CRIANDO CLIENTES +++++++++ ***/
+        /* +++++++++ CRIANDO CLIENTES +++++++++ */
         Cliente cEdu0001 = new Cliente("Eduardo Miranda", "546.444.879-12", cContatosEduardo, eEnderecosEduardo);
         Cliente cFla0001 = new Cliente("Flavio Bodao", "942.425.001-19", cContatosFlavio, eEnderecosFlavio);
         Cliente cGus0001 = new Cliente("Gustavo Valadao", "666.245.871-12", cContatosGustavo, eEnderecosGustavo);
         Cliente cIva0001 = new Cliente("Ivan Jhonson", "642.400.012-12", cContatosIvan, eEnderecosIvan);
 
-        /*** +++++++++ CRIANDO CONTAS +++++++++ ***/
+        /* +++++++++ CRIANDO CONTAS +++++++++ ***/
         ContaCorrente ccEdu0001 = new ContaCorrente(cEdu0001, "19325-9", "921", 3000, 200);
         ContaCorrente ccFla0001 = new ContaCorrente(cFla0001, "57964-0", "7198", 2500, 1000);
         ContaPoupanca cpGus0001 = new ContaPoupanca(cGus0001, "1231412", "512512", 87223);
@@ -59,7 +58,7 @@ public class Main {
         ContaPagamento cpagEdu0001 = new ContaPagamento(cEdu0001, "2210", "x333", 54876.52);
 
 
-        /**
+        /*
          ** VERIFICA SE HÁ ALGO NULO DEPOIS DA CRIAÇÃO DAS CONTAS.
          ** A FUNÇÃO UTILIZA A NOÇÃO DE POLIMORFISMO POIS CRIA UMA LISTA
          ** COM OBJETOS DA CLASSE CONTA, SENDO ESSES OBJETOS ContaCorrente e ContaPoupanca
@@ -172,15 +171,10 @@ public class Main {
         cpGus0001.imprimir();
 //
 //
-//
-//        System.out.println("=-=-=-=-TESTES CONTAS POUPANCA PAGAMENTO E CORRENTE =-=-=-=-\n");
-//
-        // Exemplo para mostrar que o saldo cobra taxa e a transferência não!
-        cpagEdu0001.setSaldo(72);
-        cpagEdu0001.sacar(72);
-        cpagEdu0001.transferir(cpIva0001, 72);
-        cpIva0001.imprimir();
-        cpagEdu0001.imprimir();
+
+        System.out.println("=-=-=-=-TESTES CONTAS POUPANCA PAGAMENTO E CORRENTE =-=-=-=-\n");
+
+
 //        Aqui temos uma transação válida
         cpIva0001.transferir(cpIva0001, 100);
         cpIva0001.imprimir();
@@ -207,5 +201,11 @@ public class Main {
         cpGus0001.depositar(-3050);
         cpGus0001.imprimir();
 
+        // Exemplo para mostrar que o saldo cobra taxa e a transferência não!
+        cpagEdu0001.setSaldo(72);
+        cpagEdu0001.sacar(72);
+        cpagEdu0001.transferir(cpIva0001, 72);
+        cpIva0001.imprimir();
+        cpagEdu0001.imprimir();
     }
 }
