@@ -180,6 +180,7 @@ public class Main {
         cpagEdu0001.sacar(72);
         cpagEdu0001.transferir(cpIva0001, 72);
         cpIva0001.imprimir();
+        cpagEdu0001.imprimir();
 //        Aqui temos uma transação válida
         cpIva0001.transferir(cpIva0001, 100);
         cpIva0001.imprimir();
