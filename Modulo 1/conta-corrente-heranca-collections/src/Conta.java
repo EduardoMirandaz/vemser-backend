@@ -80,8 +80,6 @@ public abstract class Conta implements Movimentacao{
             return false;
         }
         System.out.printf("Enviando %.2f de %s para %s\n", valor, this.getCliente().getNome(), conta.getCliente().getNome());
-        this.sacar(valor);
-        conta.depositar(valor);
         return true;
 
     }
