@@ -51,6 +51,10 @@ public class Cliente {
     }
 
     public void imprimirContatos(){
+        if(contatos == null){
+            System.out.println("Contatos inválidos");
+            return;
+        }
         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=\n");
         System.out.printf("=-=-=-=-=-=-=-=-\nimprimindo contatos de %s\n", nome);
         for (Contato contato : contatos) {
@@ -60,6 +64,10 @@ public class Cliente {
         }
     }
     public void imprimirEnderecos(){
+        if(enderecos == null){
+            System.out.println("Enderecos inválidos");
+            return;
+        }
         System.out.println("\n=-=-=-=-=-=-=-=-=-=-=\n");
         System.out.printf("=-=-=-=-=-=-=-=-\nimprimindo enderecos de %s\n", nome);
         for (Endereco endereco : enderecos) {

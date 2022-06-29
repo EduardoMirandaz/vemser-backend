@@ -47,3 +47,6 @@ VALUES(SEQ_ESTUDANTE.nextval, 'Leonardo Paulo', TO_DATE('10/02/2001', 'dd/mm/yyy
 INSERT INTO VEM_SER.ESTUDANTE (id_estudante, nome, data_nascimento, nr_matricula, ativo)
 VALUES(SEQ_ESTUDANTE.nextval, 'Marcos Paulo', TO_DATE('10/02/1999', 'dd/mm/yyyy'), 9986896321, 'S');
 
+SELECT * FROM VEM_SER.ESTUDANTE;
+
+
