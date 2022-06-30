@@ -253,3 +253,41 @@ VALUES (VEM_SER.SEQ_ENDERECOS.nextval, 187,	1119,	'Em cima da rua do limao', 111
 INSERT INTO VEM_SER.ENDERECO ( ID_ENDERECO, ID_BAIRRO, ID_CIDADE, LOGRADOURO, NUMERO, COMPLEMENTO, CEP)
 VALUES (VEM_SER.SEQ_ENDERECOS.nextval, 187,	1119,	'Rua do alvares abreu', 980021, 'Edificio 12 de ontem ','12300-142');
 
+--SELECT VEM_SER.seq_pessoa.nextval FROM DUAL
+
+
+
+SELECT  *  
+FROM  VEM_SER.PAIS 
+ORDER BY nome DESC
+
+SELECT logradouro
+FROM VEM_SER.ENDERECO
+WHERE UPPER(logradouro) LIKE 'A%';
+
+SELECT cep
+FROM VEM_SER.ENDERECO
+WHERE cep LIKE '%0';
+
+SELECT numero
+FROM VEM_SER.ENDERECO
+WHERE numero > 1 AND numero < 100 ;
+
+-- Logradores que começam com rua
+SELECT logradouro
+FROM VEM_SER.ENDERECO
+WHERE UPPER(logradouro) LIKE 'RUA%'
+ORDER BY cep DESC;
+
+-- Contagem geral
+SELECT COUNT (*) 
+	FROM VEM_SER.ENDERECO
+
+-- Contagem cada cidade
+SELECT ID_CIDADE, COUNT(LOGRADOURO)
+FROM VEM_SER.ENDERECO
+GROUP BY ID_CIDADE;
+
+	
+	
+	
