@@ -190,7 +190,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n    \"postId\": 1,\n    \"id\": 1,\n    \"name\": \"Meu comentario Ouviram opa\",\n    \"email\": \"emailDoComentario2@gmail.com\",\n    \"body\": \"Ouviram do ipiranga\"\n}",
+							"options": {
+								"raw": {
+									"language": "javascript"
+								}
+							}
 						},
 						"url": {
 							"raw": "https://jsonplaceholder.typicode.com/comments/51",
@@ -270,7 +275,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://jsonplaceholder.typicode.com/comments/101",
+							"raw": "https://jsonplaceholder.typicode.com/albums/101",
 							"protocol": "https",
 							"host": [
 								"jsonplaceholder",
@@ -278,7 +283,7 @@
 								"com"
 							],
 							"path": [
-								"comments",
+								"albums",
 								"101"
 							]
 						}
@@ -292,7 +297,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n    \"userId\": 1,\n    \"id\": 1,\n    \"title\": \"Meu album daora\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "https://jsonplaceholder.typicode.com/photos/12",
@@ -394,7 +404,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n    \"albumId\": 1,\n    \"id\": 1,\n    \"title\": \"accusamus beatae ad facilis cum similique qui sunt\",\n    \"url\": \"https://via.placeholder.com/600/92c952\",\n    \"thumbnailUrl\": \"https://via.placeholder.com/150/92c952\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "https://jsonplaceholder.typicode.com/photos/3",
