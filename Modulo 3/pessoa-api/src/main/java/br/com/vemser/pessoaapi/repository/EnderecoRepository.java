@@ -1,6 +1,7 @@
 package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.Endereco;
+import br.com.vemser.pessoaapi.entity.TipoEndereco;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +12,9 @@ public class EnderecoRepository {
     private AtomicInteger COUNTER = new AtomicInteger();
 
     public EnderecoRepository() {
-        listaEnderecos.add(new Endereco(3, COUNTER.incrementAndGet() /*1*/, 1, "Rua Jose Pedro",14,"Ao lado da casa verde","23954-879","Pindamonhangaba", "Rio de Janeiro", "Brasil"));
-        listaEnderecos.add(new Endereco(4, COUNTER.incrementAndGet() /*2*/, 2, "Avenida Paulo Dias",16,"sobrado azul","54654-963","Almerinha",  "Espirito Santo", "Brasil"));
-        listaEnderecos.add(new Endereco(1, COUNTER.incrementAndGet() /*3*/, 2, "Avenida Lacerda Junior",13,"conjunto residencial 3","21321-63","Gonçalo Dias",  "Bahia", "Brasil"));
+        listaEnderecos.add(new Endereco(3, COUNTER.incrementAndGet() /*1*/,     TipoEndereco.RESIDENCIAL, "Rua Jose Pedro",14,"Ao lado da casa verde","23954-879","Pindamonhangaba", "Rio de Janeiro", "Brasil"));
+        listaEnderecos.add(new Endereco(4, COUNTER.incrementAndGet() /*2*/, TipoEndereco.COMERCIAL, "Avenida Paulo Dias",16,"sobrado azul","54654-963","Almerinha",  "Espirito Santo", "Brasil"));
+        listaEnderecos.add(new Endereco(1, COUNTER.incrementAndGet() /*3*/, TipoEndereco.COMERCIAL, "Avenida Lacerda Junior",13,"conjunto residencial 3","21321-63","Gonçalo Dias",  "Bahia", "Brasil"));
     }
 
     public Endereco create(Endereco endereco) throws Exception {
