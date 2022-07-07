@@ -24,7 +24,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://jsonplaceholder.typicode.com/posts/",
+							"raw": "https://jsonplaceholder.typicode.com/users/",
 							"protocol": "https",
 							"host": [
 								"jsonplaceholder",
@@ -32,7 +32,7 @@
 								"com"
 							],
 							"path": [
-								"posts",
+								"users",
 								""
 							]
 						}

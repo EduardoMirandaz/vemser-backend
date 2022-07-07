@@ -36,10 +36,10 @@ public class ContatoRepository {
                 .orElseThrow(() -> new Exception("Contato não econtrado"));
 
         contatoRecuperado.setIdPessoa(contatoAtualizar.getIdPessoa());
-
         contatoRecuperado.setNumero(contatoAtualizar.getNumero());
         contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
         contatoRecuperado.setNome(contatoAtualizar.getNome());
+
         return contatoRecuperado;
     }
 

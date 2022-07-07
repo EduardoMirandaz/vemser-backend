@@ -44,7 +44,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://back-vemserdbc.herokuapp.com/pessoa/{1}\n",
+							"raw": "https://back-vemserdbc.herokuapp.com/pessoa/1",
 							"protocol": "https",
 							"host": [
 								"back-vemserdbc",
@@ -53,7 +53,7 @@
 							],
 							"path": [
 								"pessoa",
-								"{1}\n"
+								"1"
 							]
 						}
 					},
