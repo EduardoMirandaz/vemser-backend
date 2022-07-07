@@ -1,16 +1,19 @@
 package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.Contato;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+@Repository
 public class ContatoRepository {
     private static List<Contato> listaContatos = new ArrayList<>();
     private AtomicInteger COUNTER = new AtomicInteger();
-
+    @Autowired
     public ContatoRepository() {
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*1*/, 3, "Maicon Gerardi", "contato pessoal whatsapp", "51999885533"));
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*2*/, 5, "Felipe Lemos",  "contato profissional whats", "55999875421"));
@@ -19,7 +22,8 @@ public class ContatoRepository {
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*5*/, 4, "Pedro Bonella",  "quarto 415", "11999884455"));
     }
 
-    public Contato create(Contato contato) throws Exception {
+
+        public Contato create(Contato contato) throws Exception {
         contato.setIdContato(COUNTER.incrementAndGet());
         listaContatos.add(contato);
         return contato;
@@ -29,31 +33,17 @@ public class ContatoRepository {
         return listaContatos;
     }
 
-    public Contato update(Integer id, Contato contatoAtualizar) throws Exception {
-        Contato contatoRecuperado = listaContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não econtrado"));
+    public Contato update(Contato contatoAtualizar) throws Exception {
 
-        contatoRecuperado.setIdPessoa(contatoAtualizar.getIdPessoa());
-        contatoRecuperado.setNumero(contatoAtualizar.getNumero());
-        contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
-        contatoRecuperado.setNome(contatoAtualizar.getNome());
 
-        return contatoRecuperado;
+        return contatoAtualizar;
     }
 
-    public void delete(Integer id) throws Exception {
-        Contato contatoRecuperado = listaContatos.stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não econtrado"));
-        listaContatos.remove(contatoRecuperado);
+    public void delete(Contato contatoADeletar) throws Exception {
+        listaContatos.remove(contatoADeletar);
     }
 
-    public List<Contato> listById(Integer id) {
-        return listaContatos.stream()
-                .filter(contato -> contato.getIdPessoa().equals(id))
-                .collect(Collectors.toList());
+    public List<Contato> listById(List<Contato> contatos) {
+        return contatos;
     }
 }

@@ -32,23 +32,12 @@ public class PessoaRepository {
         return listaPessoas;
     }
 
-    public Pessoa update(Integer id, Pessoa pessoaAtualizar) throws Exception {
-        Pessoa pessoaRecuperada = listaPessoas.stream()
-                .filter(pessoa -> pessoa.getIdPessoa().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não econtrada"));
-        pessoaRecuperada.setCpf(pessoaAtualizar.getCpf());
-        pessoaRecuperada.setNome(pessoaAtualizar.getNome());
-        pessoaRecuperada.setDataNascimento(pessoaAtualizar.getDataNascimento());
-        return pessoaRecuperada;
+    public Pessoa update(Pessoa pessoaAtualizar) throws Exception {
+        return pessoaAtualizar;
     }
 
-    public void delete(Integer id) throws Exception {
-        Pessoa pessoaRecuperada = listaPessoas.stream()
-                .filter(pessoa -> pessoa.getIdPessoa().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Pessoa não econtrada"));
-        listaPessoas.remove(pessoaRecuperada);
+    public void delete(Pessoa pessoaADeletar) throws Exception {
+        listaPessoas.remove(pessoaADeletar);
     }
 
     public List<Pessoa> listByName(String nome) {
