@@ -2,10 +2,14 @@ package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.entity.TipoEndereco;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
+@Repository
 
 public class EnderecoRepository {
     private static List<Endereco> listaEnderecos = new ArrayList<>();
