@@ -305,7 +305,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://jsonplaceholder.typicode.com/photos/12",
+							"raw": "https://jsonplaceholder.typicode.com/albums/12",
 							"protocol": "https",
 							"host": [
 								"jsonplaceholder",
@@ -313,7 +313,7 @@
 								"com"
 							],
 							"path": [
-								"photos",
+								"albums",
 								"12"
 							]
 						}
