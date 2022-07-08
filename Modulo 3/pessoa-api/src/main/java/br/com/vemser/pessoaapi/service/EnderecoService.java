@@ -15,11 +15,12 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    public Endereco create(Endereco Endereco) throws Exception {
+    public Endereco create(Endereco endereco) throws Exception {
         PessoaRepository pessoaRepository = new PessoaRepository();
-        pessoaRepository.list().stream().filter(pessoa -> Objects.equals(pessoa.getIdPessoa(), Endereco.getIdPessoa()))
-                .findFirst().orElseThrow( () -> new Exception("Id de pessoa não cadastrado no sistema!") );
-        return enderecoRepository.create(Endereco);
+        if(!pessoaDoEnderecoExiste(endereco, pessoaRepository)){
+            return null;
+        }
+        return enderecoRepository.create(endereco);
 
     }
 
@@ -31,20 +32,30 @@ public class EnderecoService {
         enderecoRepository.list().stream().filter(Endereco -> Endereco.getIdEndereco().equals(id))
                 .findFirst().orElseThrow( () -> new Exception("Id de Endereco não cadastrado no sistema!") );
         PessoaRepository pessoaRepository = new PessoaRepository();
-        pessoaRepository.list().stream().filter(pessoa -> Objects.equals(pessoa.getIdPessoa(), enderecoAtualizar.getIdPessoa()))
-                .findFirst().orElseThrow( () -> new Exception("Id de pessoa não cadastrado no sistema!") );
+        if(!pessoaDoEnderecoExiste(enderecoAtualizar, pessoaRepository)){
+            return null;
+        }
 
         Endereco enderecoRecuperado = enderecoRepository.list().stream()
                 .filter(Endereco -> Endereco.getIdEndereco().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new Exception("Endereco não econtrado"));
-        // nao deu tempo...
-//        enderecoRecuperado.setIdPessoa(enderecoAtualizar.getIdPessoa());
-//        enderecoRecuperado.setNumero(enderecoAtualizar.getNumero());
-//        enderecoRecuperado.setDescricao(enderecoAtualizar.getDescricao());
-//        enderecoRecuperado.setNome(enderecoAtualizar.getNome());
 
-        return enderecoRepository.update(enderecoAtualizar);
+        enderecoRecuperado.setIdPessoa(enderecoAtualizar.getIdPessoa());
+        enderecoRecuperado.setTipo(enderecoAtualizar.getTipo());
+        enderecoRecuperado.setLogradouro(enderecoAtualizar.getLogradouro());
+        enderecoRecuperado.setNumero(enderecoAtualizar.getNumero());
+        enderecoRecuperado.setComplemento(enderecoAtualizar.getComplemento());
+        enderecoRecuperado.setCidade(enderecoAtualizar.getCidade());
+        enderecoRecuperado.setEstado(enderecoAtualizar.getEstado());
+        enderecoRecuperado.setPais(enderecoAtualizar.getPais());
+
+        return enderecoRepository.update(enderecoRecuperado);
+    }
+
+    private boolean pessoaDoEnderecoExiste(Endereco enderecoAtualizar, PessoaRepository pessoaRepository) throws Exception {
+        return pessoaRepository.list().stream().filter(pessoa -> Objects.equals(pessoa.getIdPessoa(), enderecoAtualizar.getIdPessoa()))
+                .findFirst().orElseThrow( () -> new Exception("Id de pessoa não cadastrado no sistema!") ) != null;
     }
 
     public void delete(Integer id) throws Exception {
