@@ -4,19 +4,22 @@ package br.com.vemser.pessoaapi.controller;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.service.PessoaService;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
-@RestController
+@Validated
+@RestController // é um bean Controller
 @RequestMapping("/pessoa") // localhost:8080/pessoa
 public class PessoaController {
 
+    @Autowired
     private PessoaService pessoaService;
 
-    public PessoaController() {
-        pessoaService = new PessoaService();
-    }
 
     @GetMapping("/hello") // localhost:8080/pessoa/hello
     public String hello() {
@@ -24,7 +27,7 @@ public class PessoaController {
     }
 
     @PostMapping // localhost:8080/pessoa
-    public Pessoa create(@RequestBody Pessoa pessoa) {
+    public Pessoa create(@Valid @RequestBody Pessoa pessoa) {
         return pessoaService.create(pessoa);
     }
 
@@ -40,7 +43,7 @@ public class PessoaController {
 
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
     public Pessoa update(@PathVariable("idPessoa") Integer id,
-                         @RequestBody Pessoa pessoaAtualizar) throws Exception {
+                         @Valid @RequestBody Pessoa pessoaAtualizar) throws Exception {
         return pessoaService.update(id, pessoaAtualizar);
     }
 

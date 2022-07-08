@@ -4,10 +4,13 @@ package br.com.vemser.pessoaapi.controller;
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/endereco") // localhost:8080/contato
 public class EnderecoController {
@@ -20,18 +23,18 @@ public class EnderecoController {
         return enderecoService.list();
     }
 
-    @GetMapping("/byId") // localhost:8080/contato/byId?id=3
+    @GetMapping("/byId") // localhost:8080/endereco/byId?id=3
     public List<Endereco> listById(@RequestParam("id") Integer id) throws Exception {
         return enderecoService.listById(id);
     }
 
     @PostMapping("/{idPessoa}") // localhost:8080/endereco/6
-    public Endereco post(@PathVariable("idPessoa") Integer id, @RequestBody Endereco enderecoAdicionar) throws Exception {
+    public Endereco post(@PathVariable("idPessoa") Integer id, @Valid @RequestBody Endereco enderecoAdicionar) throws Exception {
         return enderecoService.create(enderecoAdicionar);
     }
 
     @PutMapping("/{idEndereco}") // localhost:8080/endereco/1000
-    public Endereco update(@PathVariable("idEndereco") Integer id, @RequestBody Endereco enderecoAtualizar) throws Exception {
+    public Endereco update(@PathVariable("idEndereco") Integer id, @Valid @RequestBody Endereco enderecoAtualizar) throws Exception {
         return enderecoService.update(id, enderecoAtualizar);
     }
 

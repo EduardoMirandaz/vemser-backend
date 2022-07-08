@@ -1,6 +1,7 @@
 package br.com.vemser.pessoaapi.service;
 
 import br.com.vemser.pessoaapi.entity.Contato;
+import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,42 +19,51 @@ public class ContatoService {
 
     public Contato create(Contato contato) throws Exception {
         PessoaRepository pessoaRepository = new PessoaRepository();
-        pessoaRepository.list().stream().filter(pessoa -> Objects.equals(pessoa.getIdPessoa(), contato.getIdPessoa()))
+        Pessoa pessoa1 = pessoaRepository.list().stream().filter(pessoa -> Objects.equals(pessoa.getIdPessoa(), contato.getIdPessoa()))
                 .findFirst().orElseThrow( () -> new Exception("Id de pessoa não cadastrado no sistema!") );
-        return contatoRepository.create(contato);
+        if(pessoa1 != null){
+            return contatoRepository.create(contato);
+        }
+        return null;
 
     }
 
     public List<Contato> list(){
+        System.out.println(contatoRepository.list());
         return contatoRepository.list();
     }
 
     public Contato update(Integer id, Contato contatoAtualizar) throws Exception {
-        contatoRepository.list().stream().filter(contato -> contato.getIdContato().equals(id))
-                .findFirst().orElseThrow( () -> new Exception("Id de contato não cadastrado no sistema!") );
+        procurarContatoPorId(id, "Id de contato não cadastrado no sistema!");
         PessoaRepository pessoaRepository = new PessoaRepository();
-        pessoaRepository.list().stream().filter(pessoa -> Objects.equals(pessoa.getIdPessoa(), contatoAtualizar.getIdPessoa()))
-                .findFirst().orElseThrow( () -> new Exception("Id de pessoa não cadastrado no sistema!") );
+        procurarPessoaPorId(contatoAtualizar, pessoaRepository);
 
-        Contato contatoRecuperado = contatoRepository.list().stream()
-                .filter(contato -> contato.getIdContato().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new Exception("Contato não econtrado"));
+        Contato contatoRecuperado = procurarContatoPorId(id, "Contato não econtrado");
 
+        contatoRecuperado.setIdContato(id);
         contatoRecuperado.setIdPessoa(contatoAtualizar.getIdPessoa());
         contatoRecuperado.setNumero(contatoAtualizar.getNumero());
         contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
         contatoRecuperado.setNome(contatoAtualizar.getNome());
 
-        return contatoRepository.update(contatoAtualizar);
+        return contatoRepository.update(contatoRecuperado);
+    }
+
+    private void procurarPessoaPorId(Contato contatoAtualizar, PessoaRepository pessoaRepository) throws Exception {
+        pessoaRepository.list().stream().filter(pessoa -> Objects.equals(pessoa.getIdPessoa(), contatoAtualizar.getIdPessoa()))
+                .findFirst().orElseThrow( () -> new Exception("Id de pessoa não cadastrado no sistema!") );
     }
 
     public void delete(Integer id) throws Exception {
-        Contato contatoRecuperado = contatoRepository.list().stream()
+        Contato contatoRecuperado = procurarContatoPorId(id, "Contato não econtrado");
+        contatoRepository.delete(contatoRecuperado);
+    }
+
+    private Contato procurarContatoPorId(Integer id, String Contato_nao_econtrado) throws Exception {
+        return contatoRepository.list().stream()
                 .filter(contato -> contato.getIdContato().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new Exception("Contato não econtrado"));
-        contatoRepository.delete(contatoRecuperado);
+                .orElseThrow(() -> new Exception(Contato_nao_econtrado));
     }
 
     public List<Contato> listById(Integer id) throws Exception {

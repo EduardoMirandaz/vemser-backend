@@ -1,12 +1,21 @@
 package br.com.vemser.pessoaapi.entity;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 public class Pessoa {
-
     private Integer idPessoa;
+    @NotEmpty
     private String nome;
+    @NotNull(message = "Informe corretamente a data de nascimento")
+    @Past
     private LocalDate dataNascimento;
+    @NotNull
+    @Size(min = 11, max = 11)
     private String cpf;
 
     public Pessoa() {
