@@ -1,11 +1,17 @@
 package br.com.vemser.pessoaapi.service;
 
+import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
+import br.com.vemser.pessoaapi.dto.ContatoDTO;
+import br.com.vemser.pessoaapi.dto.EnderecoDTO;
 import br.com.vemser.pessoaapi.entity.Contato;
+import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.vemser.pessoaapi.repository.PessoaRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +19,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ContatoService {
 
@@ -20,39 +27,40 @@ public class ContatoService {
     private ContatoRepository contatoRepository;
     @Autowired
     private PessoaRepository pessoaRepository;
+    @Autowired
+    private PessoaService pessoaService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-
-
-    public Contato create(Contato contato, Integer idPessoa) throws Exception {
-        Pessoa pessoa1 = pessoaRepository.list().stream()
-                .filter(pessoa -> Objects.equals(pessoa.getIdPessoa(),idPessoa))
-                .findFirst()
-                .orElseThrow( () -> new RegraDeNegocioException("Id de pessoa não cadastrado no sistema!") );
-        if(pessoa1 != null){
-            contato.setIdPessoa(idPessoa);
-            return contatoRepository.create(contato);
-        }
-        return null;
+    public List<ContatoDTO> list(){
+        return contatoRepository.list()
+                .stream()
+                .map(contato -> objectMapper.convertValue(contato, ContatoDTO.class))
+                .collect(Collectors.toList());
     }
 
-    public List<Contato> list(){
-        return contatoRepository.list();
+    public ContatoDTO create(ContatoCreateDTO contatCreateDTO, Integer idPessoa) throws Exception {
+        Contato contato = objectMapper.convertValue(contatCreateDTO, Contato.class);
+        pessoaService.findPersonByID(idPessoa);
+        contato.setIdPessoa(idPessoa);
+        return objectMapper.convertValue(contatoRepository.create(contato), ContatoDTO.class);
+
     }
 
 
     // A pessoa poderá alterar as características dos contatos, mas os ids permanecem!
-    public Contato update(Integer id, Contato contatoAtualizar) throws Exception {
+    public ContatoDTO update(Integer id, ContatoCreateDTO contatoCreateDTOAtualizar) throws Exception {
 
         Contato contatoRecuperado = procurarContatoPorId(id, "Id de contato não encontrado no sistema!");
 
-        System.out.println(contatoRecuperado);
+        Contato contatoAtualizar = objectMapper.convertValue(contatoCreateDTOAtualizar, Contato.class);
 
         contatoRecuperado.setNumero(contatoAtualizar.getNumero());
         contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
         contatoRecuperado.setNome(contatoAtualizar.getNome());
         contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato());
 
-        return contatoRepository.update(contatoRecuperado);
+        return objectMapper.convertValue(contatoRepository.update(contatoRecuperado), ContatoDTO.class);
     }
 
     private void procurarPessoaPorId(Contato contatoAtualizar, PessoaRepository pessoaRepository) throws Exception {
@@ -74,11 +82,16 @@ public class ContatoService {
 
 
     // Lista os contatos da pessoa pelo ID, que é recebido por requestParam ?byUserId=
-    public List<Contato> listById(Integer id) throws Exception {
-        return contatoRepository.listById(
-                contatoRepository.list().stream()
+    public List<ContatoDTO> listById(Integer id) throws Exception {
+        List<Contato> contatos = contatoRepository.listById(
+                contatoRepository.list()
+                        .stream()
                         .filter(contato -> contato.getIdPessoa().equals(id))
                         .collect(Collectors.toList())
         );
+        return contatos.stream()
+                .map(contato -> objectMapper.convertValue(contato, ContatoDTO.class))
+                .collect(Collectors.toList());
+
     }
 }

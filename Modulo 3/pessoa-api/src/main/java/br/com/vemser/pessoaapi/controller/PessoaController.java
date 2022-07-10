@@ -1,13 +1,15 @@
 package br.com.vemser.pessoaapi.controller;
 
 
+import br.com.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.service.PessoaService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +26,13 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @PostMapping // localhost:8080/pessoa
-    public Pessoa create(@Valid @RequestBody Pessoa pessoa) {
+    public ResponseEntity<PessoaDTO> create(@Valid @RequestBody PessoaCreateDTO pessoaDTO) {
         log.info("Criando pessoa!");
-        return pessoaService.create(pessoa);
+        return new ResponseEntity<PessoaDTO>(pessoaService.create(pessoaDTO), HttpStatus.CREATED);
     }
 
     @GetMapping // localhost:8080/pessoa
-    public List<Pessoa> list() {
+    public List<PessoaDTO> list() {
         log.info("Listando pessoas!");
         return pessoaService.list();
     }
@@ -42,10 +44,10 @@ public class PessoaController {
     }
 
     @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
-    public Pessoa update(@PathVariable("idPessoa") Integer id,
-                         @Valid @RequestBody Pessoa pessoaAtualizar) throws Exception {
+    public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
+                         @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws Exception {
         log.info("Tentando atualizar pessoa de id ["+id+"]");
-        return pessoaService.update(id, pessoaAtualizar);
+        return new ResponseEntity<PessoaDTO>(pessoaService.update(id, pessoaAtualizar), HttpStatus.I_AM_A_TEAPOT);
     }
 
     @DeleteMapping("/{idPessoa}") // localhost:8080/pessoa/10

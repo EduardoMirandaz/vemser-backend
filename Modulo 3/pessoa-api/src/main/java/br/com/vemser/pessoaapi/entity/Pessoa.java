@@ -1,6 +1,7 @@
 package br.com.vemser.pessoaapi.entity;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.*;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ public class Pessoa {
 
     @NotNull(message = "Informe corretamente a data de nascimento")
     @Past(message = "A data de nascimento deve ser anterior ao dia de hoje!")
+    @DateTimeFormat()
     private LocalDate dataNascimento;
 
     @NotEmpty(message = "CPF não pode ser vazio")

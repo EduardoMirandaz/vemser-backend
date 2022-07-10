@@ -23,7 +23,6 @@ public class EnderecoRepository {
     public Endereco create(Endereco endereco) throws Exception {
         endereco.setIdEndereco(COUNTER.incrementAndGet());
         listaEnderecos.add(endereco);
-        System.out.println(listaEnderecos);
         return endereco;
     }
 
