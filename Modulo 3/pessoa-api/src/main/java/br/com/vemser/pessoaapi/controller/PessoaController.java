@@ -4,6 +4,7 @@ package br.com.vemser.pessoaapi.controller;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.service.PessoaService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -19,12 +20,6 @@ public class PessoaController {
 
     @Autowired
     private PessoaService pessoaService;
-
-
-    @GetMapping("/hello") // localhost:8080/pessoa/hello
-    public String hello() {
-        return "Hello world!";
-    }
 
     @PostMapping // localhost:8080/pessoa
     public Pessoa create(@Valid @RequestBody Pessoa pessoa) {

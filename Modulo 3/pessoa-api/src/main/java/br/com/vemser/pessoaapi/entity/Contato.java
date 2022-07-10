@@ -1,96 +1,38 @@
 package br.com.vemser.pessoaapi.entity;
 
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import lombok.*;
 
+import javax.validation.constraints.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class Contato {
 
-    @NotNull
+    // identificadores
     private Integer idContato;
     private Integer idPessoa;
 
+
+    @NotNull(message = "O nome não deve ser nulo")
+    @NotEmpty(message = "O nome não deve estar vazio")
     private String nome;
-    @NotNull
-    @NotEmpty
+
+
+    @NotNull(message = "A descrição nao pode ser nula")
+    @NotEmpty(message = "A descrição nao pode estar vazia")
     private String descricao;
-    @Size(max = 13)
-    @NotNull
+
+    @NotEmpty(message = "O número não pode ser vazio")
+    @NotNull(message = "O número não pode ser nulo")
+    @NotBlank(message = "O número não pode ser em branco")
+    @Size(max = 13, message = "O número conter no máximo 13 caracteres")
     private String numero;
-    @NotNull
+
+    @NotNull(message = "O tipo de contato não pode ser nulo!")
     private TipoContato tipoContato;
 
-    public Contato() {
-    }
-
-    public Contato(Integer idContato, Integer idPessoa, String nome, String descricao, String numero, TipoContato tipoContato) {
-        this.idContato = idContato;
-        this.idPessoa = idPessoa;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.numero = numero;
-        this.tipoContato = tipoContato;
-    }
-
-    public Integer getIdContato() {
-        return idContato;
-    }
-
-    public void setIdContato(Integer idContato) {
-        this.idContato = idContato;
-    }
-
-    public Integer getIdPessoa() {
-        return idPessoa;
-    }
-
-    public void setIdPessoa(Integer idPessoa) {
-        this.idPessoa = idPessoa;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public TipoContato getTipoContato() {
-        return tipoContato;
-    }
-
-    public void setTipoContato(TipoContato tipoContato) {
-        this.tipoContato = tipoContato;
-    }
-
-    @Override
-    public String toString() {
-        return "Contato{" +
-                "idContato=" + idContato +
-                ", idPessoa=" + idPessoa +
-                ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", numero='" + numero + '\'' +
-                ", tipoContato=" + tipoContato +
-                '}';
-    }
 }

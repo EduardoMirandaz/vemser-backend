@@ -3,7 +3,6 @@ package br.com.vemser.pessoaapi.repository;
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.entity.TipoEndereco;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +23,7 @@ public class EnderecoRepository {
     public Endereco create(Endereco endereco) throws Exception {
         endereco.setIdEndereco(COUNTER.incrementAndGet());
         listaEnderecos.add(endereco);
+        System.out.println(listaEnderecos);
         return endereco;
     }
 

@@ -23,18 +23,20 @@ public class EnderecoController {
         return enderecoService.list();
     }
 
-    @GetMapping("/byId") // localhost:8080/endereco/byId?id=3
-    public List<Endereco> listById(@RequestParam("id") Integer id) throws Exception {
+    // deve ser path variable
+
+    @GetMapping("/{id}") // localhost:8080/endereco/id
+    public List<Endereco> listById(@PathVariable("id") Integer id) throws Exception {
         return enderecoService.listById(id);
     }
 
     @PostMapping("/{idPessoa}") // localhost:8080/endereco/6
-    public Endereco post(@PathVariable("idPessoa") Integer id, @Valid @RequestBody Endereco enderecoAdicionar) throws Exception {
-        return enderecoService.create(enderecoAdicionar);
+    public Endereco post(@PathVariable("idPessoa") Integer id, @RequestBody @Valid  Endereco enderecoAdicionar) throws Exception {
+        return enderecoService.create(id, enderecoAdicionar);
     }
 
     @PutMapping("/{idEndereco}") // localhost:8080/endereco/1000
-    public Endereco update(@PathVariable("idEndereco") Integer id, @Valid @RequestBody Endereco enderecoAtualizar) throws Exception {
+    public Endereco update(@PathVariable("idEndereco") Integer id, @RequestBody @Valid Endereco enderecoAtualizar) throws Exception {
         return enderecoService.update(id, enderecoAtualizar);
     }
 

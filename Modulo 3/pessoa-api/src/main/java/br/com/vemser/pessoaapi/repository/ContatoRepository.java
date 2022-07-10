@@ -2,6 +2,8 @@ package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.Contato;
 import br.com.vemser.pessoaapi.entity.TipoContato;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 public class ContatoRepository {
     private static List<Contato> listaContatos = new ArrayList<>();
     private AtomicInteger COUNTER = new AtomicInteger();
+
     @Autowired
     public ContatoRepository() {
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*1*/, 3, "Maicon Gerardi", "contato pessoal whatsapp", "51999885533", TipoContato.COMERCIAL));
@@ -23,8 +26,7 @@ public class ContatoRepository {
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*5*/, 4, "Pedro Bonella",  "quarto 415", "11999884455",TipoContato.RESIDENCIAL));
     }
 
-
-        public Contato create(Contato contato) throws Exception {
+    public Contato create(Contato contato) throws Exception {
         contato.setIdContato(COUNTER.incrementAndGet());
         listaContatos.add(contato);
         return contato;
