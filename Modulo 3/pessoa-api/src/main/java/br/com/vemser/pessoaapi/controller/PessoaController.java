@@ -6,6 +6,7 @@ import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
 import br.com.vemser.pessoaapi.service.EmailService;
 import br.com.vemser.pessoaapi.service.PessoaService;
 
@@ -59,7 +60,7 @@ public class PessoaController {
 
 
     @PostMapping // localhost:8080/pessoa
-    public ResponseEntity<PessoaDTO> create(@Valid @RequestBody PessoaCreateDTO pessoaDTO) {
+    public ResponseEntity<PessoaDTO> create(@Valid @RequestBody PessoaCreateDTO pessoaDTO) throws TipoRequisicaoInvalido {
         log.info("Criando pessoa!");
         return new ResponseEntity<PessoaDTO>(pessoaService.create(pessoaDTO, POST), HttpStatus.CREATED);
     }

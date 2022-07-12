@@ -2,10 +2,10 @@ package br.com.vemser.pessoaapi.service;
 
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
-import br.com.vemser.pessoaapi.entity.Contato;
 import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
 import br.com.vemser.pessoaapi.repository.EnderecoRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class EnderecoService {
     @Autowired
     private EmailService emailService;
 
-    public EnderecoDTO create(Integer idPessoa, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
+    public EnderecoDTO create(Integer idPessoa, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Criando endereco!");
         Endereco endereco = objectMapper.convertValue(enderecoCreateDTO, Endereco.class);
         Endereco endereco1 = enderecoRepository.create(endereco);
@@ -51,7 +51,7 @@ public class EnderecoService {
 
     // O endereço é recebido como path variable e altera as informações
     // do mesmo, sem mudar o id da pessoa!
-    public EnderecoDTO update(Integer id, EnderecoCreateDTO enderecoCreateDTOAtualizar) throws RegraDeNegocioException {
+    public EnderecoDTO update(Integer id, EnderecoCreateDTO enderecoCreateDTOAtualizar) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Atualizando endereco!");
 
         Integer idPessoa = findAdressByID(id).getIdPessoa();
@@ -86,7 +86,7 @@ public class EnderecoService {
     }
 
 
-    public void delete(Integer id) throws RegraDeNegocioException {
+    public void delete(Integer id) throws RegraDeNegocioException, TipoRequisicaoInvalido {
 
         // recuperando pessoa pelo id do endereco;
         Integer idPessoa = findAdressByID(id).getIdPessoa();

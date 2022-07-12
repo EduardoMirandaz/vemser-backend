@@ -1,5 +1,6 @@
 package br.com.vemser.pessoaapi.service;
 
+import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import lombok.RequiredArgsConstructor;
@@ -60,7 +61,7 @@ public class EmailService {
     }
 
 
-    public void sendEmail(String nome, Integer id, String email, Integer tipoRequisicao) {
+    public void sendEmail(String nome, Integer id, String email, Integer tipoRequisicao) throws TipoRequisicaoInvalido {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         try {
 
@@ -78,6 +79,7 @@ public class EmailService {
                 case DELETE -> {
                     mimeMessageHelper.setSubject("Endereco deletado no petshop Padawans!");
                 }
+                default -> throw new TipoRequisicaoInvalido("Requisicao inválida!");
             }
             mimeMessageHelper.setText(geContentFromTemplate(nome, id, email, tipoRequisicao), true);
 

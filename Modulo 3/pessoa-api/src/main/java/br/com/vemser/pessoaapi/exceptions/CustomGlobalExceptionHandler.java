@@ -56,6 +56,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(TipoRequisicaoInvalido.class)
+    public ResponseEntity<Object> handleException(TipoRequisicaoInvalido exception,
+                                                  HttpServletRequest request) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
+        body.put("status", HttpStatus.BAD_REQUEST.value());
+        body.put("message", exception.getMessage());
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(PessoaNulaException.class)
     public ResponseEntity<Object> handleException(PessoaNulaException exception,
                                                   HttpServletRequest request) {

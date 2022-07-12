@@ -3,8 +3,8 @@ package br.com.vemser.pessoaapi.controller;
 
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
-import br.com.vemser.pessoaapi.entity.Endereco;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
 import br.com.vemser.pessoaapi.service.EmailService;
 import br.com.vemser.pessoaapi.service.EnderecoService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,10 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-
-import static br.com.vemser.pessoaapi.service.EmailService.POST;
-import static br.com.vemser.pessoaapi.service.EmailService.PUT;
-import static br.com.vemser.pessoaapi.service.EmailService.DELETE;
 
 @Validated
 @RestController
@@ -52,19 +48,19 @@ public class EnderecoController {
     }
 
     @PostMapping("/{idPessoa}") // localhost:8080/endereco/6
-    public EnderecoDTO post(@PathVariable("idPessoa") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
+    public EnderecoDTO post(@PathVariable("idPessoa") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Tentando cadastrar enderecos para a pessoa de id ["+id+"]");
         return enderecoService.create(id, enderecoCreateDTO);
     }
 
     @PutMapping("/{idEndereco}") // localhost:8080/endereco/1000
-    public EnderecoDTO update(@PathVariable("idEndereco") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoAtualizar) throws RegraDeNegocioException {
+    public EnderecoDTO update(@PathVariable("idEndereco") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoAtualizar) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Tentando editar endereco de id ["+id+"]");
         return enderecoService.update(id, enderecoAtualizar);
     }
 
     @DeleteMapping("/{idEndereco}") // localhost:8080/endereco/10
-    public void delete(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException {
+    public void delete(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         enderecoService.delete(id);
     }
 }

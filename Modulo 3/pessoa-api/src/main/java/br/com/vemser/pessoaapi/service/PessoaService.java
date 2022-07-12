@@ -5,6 +5,7 @@ import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.Pessoa;
 import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
+import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
 import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class PessoaService {
 
 
 
-    public PessoaDTO create(PessoaCreateDTO pessoaCreateDTO, Integer tipoRequisicao){
+    public PessoaDTO create(PessoaCreateDTO pessoaCreateDTO, Integer tipoRequisicao) throws TipoRequisicaoInvalido {
         Pessoa pessoa = objectMapper.convertValue(pessoaCreateDTO, Pessoa.class);
         Pessoa pessoa1 = pessoaRepository.create(pessoa);
         emailService.sendEmail(pessoa1.getNome(), pessoa1.getIdPessoa(), pessoa1.getEmail(), tipoRequisicao);
