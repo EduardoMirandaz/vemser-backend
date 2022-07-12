@@ -22,4 +22,7 @@ public class PessoaCreateDTO {
     @Size(min = 11,max = 11, message = "Deve conter 11 caracteres")
     private String cpf;
 
+    @NotNull(message = "Não pode ser nulo")
+    @NotEmpty(message = "Nào pode ser vazio")
+    private String email;
 }

@@ -2,15 +2,13 @@ package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.Contato;
 import br.com.vemser.pessoaapi.entity.TipoContato;
-import lombok.Getter;
-import lombok.Setter;
+import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 @Repository
 public class ContatoRepository {
@@ -26,7 +24,7 @@ public class ContatoRepository {
         listaContatos.add(new Contato(COUNTER.incrementAndGet() /*5*/, 4, "Pedro Bonella",  "quarto 415", "11999884455",TipoContato.RESIDENCIAL));
     }
 
-    public Contato create(Contato contato) throws Exception {
+    public Contato create(Contato contato) throws RegraDeNegocioException {
         contato.setIdContato(COUNTER.incrementAndGet());
         listaContatos.add(contato);
         return contato;
@@ -36,11 +34,11 @@ public class ContatoRepository {
         return listaContatos;
     }
 
-    public Contato update(Contato contatoAtualizar) throws Exception {
+    public Contato update(Contato contatoAtualizar) throws RegraDeNegocioException {
         return contatoAtualizar;
     }
 
-    public void delete(Contato contatoADeletar) throws Exception {
+    public void delete(Contato contatoADeletar) throws RegraDeNegocioException {
         listaContatos.remove(contatoADeletar);
     }
 

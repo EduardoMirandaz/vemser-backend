@@ -39,7 +39,7 @@ public class ContatoService {
                 .collect(Collectors.toList());
     }
 
-    public ContatoDTO create(ContatoCreateDTO contatCreateDTO, Integer idPessoa) throws Exception {
+    public ContatoDTO create(ContatoCreateDTO contatCreateDTO, Integer idPessoa) throws RegraDeNegocioException {
         Contato contato = objectMapper.convertValue(contatCreateDTO, Contato.class);
         pessoaService.findPersonByID(idPessoa);
         contato.setIdPessoa(idPessoa);
@@ -49,7 +49,7 @@ public class ContatoService {
 
 
     // A pessoa poderá alterar as características dos contatos, mas os ids permanecem!
-    public ContatoDTO update(Integer id, ContatoCreateDTO contatoCreateDTOAtualizar) throws Exception {
+    public ContatoDTO update(Integer id, ContatoCreateDTO contatoCreateDTOAtualizar) throws RegraDeNegocioException {
 
         Contato contatoRecuperado = procurarContatoPorId(id, "Id de contato não encontrado no sistema!");
 
@@ -63,33 +63,30 @@ public class ContatoService {
         return objectMapper.convertValue(contatoRepository.update(contatoRecuperado), ContatoDTO.class);
     }
 
-    private void procurarPessoaPorId(Contato contatoAtualizar, PessoaRepository pessoaRepository) throws Exception {
-        pessoaRepository.list().stream().filter(pessoa -> Objects.equals(pessoa.getIdPessoa(), contatoAtualizar.getIdPessoa()))
-                .findFirst().orElseThrow( () -> new RegraDeNegocioException("Id de pessoa não cadastrado no sistema!") );
-    }
-
-    public void delete(Integer id) throws Exception {
-        Contato contatoRecuperado = procurarContatoPorId(id, "Contato não econtrado");
+    public void delete(Integer id) throws RegraDeNegocioException {
+        Contato contatoRecuperado = procurarContatoPorId(id, "Contato não encontrado");
         contatoRepository.delete(contatoRecuperado);
     }
 
-    private Contato procurarContatoPorId(Integer id, String Contato_nao_econtrado) throws Exception {
-        return contatoRepository.list().stream()
+    private Contato procurarContatoPorId(Integer id, String Contato_nao_encontrado) throws RegraDeNegocioException {
+        return contatoRepository.list()
+                .stream()
                 .filter(contato -> contato.getIdContato().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException(Contato_nao_econtrado));
+                .orElseThrow(() -> new RegraDeNegocioException(Contato_nao_encontrado));
     }
 
 
     // Lista os contatos da pessoa pelo ID, que é recebido por requestParam ?byUserId=
-    public List<ContatoDTO> listById(Integer id) throws Exception {
+    public List<ContatoDTO> listById(Integer id) throws RegraDeNegocioException {
         List<Contato> contatos = contatoRepository.listById(
                 contatoRepository.list()
                         .stream()
                         .filter(contato -> contato.getIdPessoa().equals(id))
                         .collect(Collectors.toList())
         );
-        return contatos.stream()
+        return contatos
+                .stream()
                 .map(contato -> objectMapper.convertValue(contato, ContatoDTO.class))
                 .collect(Collectors.toList());
 

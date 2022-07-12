@@ -1,6 +1,7 @@
 package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.Pessoa;
+import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -17,11 +18,11 @@ public class PessoaRepository {
 
     public PessoaRepository() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); //18/10/2020
-        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*1*/, "Maicon Gerardi", LocalDate.parse("10/10/1990", formatter), "12345678910"));
-        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*2*/, "Charles Pereira", LocalDate.parse("08/05/1985", formatter), "12345678911"));
-        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*3*/, "Marina Oliveira", LocalDate.parse("30/03/1970", formatter), "12345678912"));
-        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*4*/, "Rafael Lazzari", LocalDate.parse("01/07/1990", formatter), "12345678916"));
-        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*5*/, "Ana", LocalDate.parse("01/07/1990", formatter), "12345678917"));
+        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*1*/, "Maicon Gerardi", LocalDate.parse("10/10/1990", formatter), "12345678910", "genoveba253@uorak.com"));
+        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*2*/, "Charles Pereira", LocalDate.parse("08/05/1985", formatter), "12345678911", "noemi8941@uorak.com"));
+        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*3*/, "Marina Oliveira", LocalDate.parse("30/03/1970", formatter), "12345678912", "vivina3942@uorak.com"));
+        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*4*/, "Rafael Lazzari", LocalDate.parse("01/07/1990", formatter), "12345678916", "katsiaryna4196@uorak.com"));
+        listaPessoas.add(new Pessoa(COUNTER.incrementAndGet() /*5*/, "Ana", LocalDate.parse("01/07/1990", formatter), "12345678917", "eduardo.azevedo@dbccompany.com.br"));
     }
 
     public Pessoa create(Pessoa pessoa) {
@@ -34,16 +35,17 @@ public class PessoaRepository {
         return listaPessoas;
     }
 
-    public Pessoa update(Pessoa pessoaAtualizar) throws Exception {
+    public Pessoa update(Pessoa pessoaAtualizar) throws RegraDeNegocioException {
         return pessoaAtualizar;
     }
 
-    public void delete(Pessoa pessoaADeletar) throws Exception {
+    public void delete(Pessoa pessoaADeletar) throws RegraDeNegocioException {
         listaPessoas.remove(pessoaADeletar);
     }
 
     public List<Pessoa> listByName(String nome) {
-        return listaPessoas.stream()
+        return listaPessoas
+                .stream()
                 .filter(pessoa -> pessoa.getNome().toUpperCase().contains(nome.toUpperCase()))
                 .collect(Collectors.toList());
     }
