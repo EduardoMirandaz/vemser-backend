@@ -30,9 +30,14 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String from;
 
+    @Value("${remetente}")
+    private String usuario;
+
     public static final int POST = 1;
     public static final int PUT = 2;
     public static final int DELETE = 3;
+
+
     public final JavaMailSender emailSender;
 
     public void sendSimpleMessage(){
@@ -89,18 +94,12 @@ public class EmailService {
         }
     }
 
-    @Value("${remetente}")
-    private String usuario;
-
-    @Value("${email}")
-    private String email;
-
     public String geContentFromTemplate(String nome, Integer id, String email, Integer requisicao) throws IOException, TemplateException {
         Map<String, Object> dados = new HashMap<>();
 
         // local
         dados.put("usuario", usuario);
-        dados.put("email", this.email);
+        dados.put("email", from);
 
         // da requisicao
         dados.put("nome", nome);

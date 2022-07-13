@@ -68,7 +68,7 @@ public class PessoaService {
                 .stream()
                 .filter(pessoa -> pessoa.getIdPessoa().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não econtrada"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada"));
     }
 
     public List<Pessoa> listByName(String nome) {
