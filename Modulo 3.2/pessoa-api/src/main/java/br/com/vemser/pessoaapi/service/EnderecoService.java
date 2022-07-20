@@ -12,7 +12,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -27,14 +29,15 @@ public class EnderecoService {
     @Autowired
     private EmailService emailService;
 
-    public EnderecoDTO create(Integer id_pessoa, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
-        log.info("Criando ENDERECOPESSOA!");
-        EnderecoEntity ENDERECOPESSOA = objectMapper.convertValue(enderecoCreateDTO, EnderecoEntity.class);
-        PessoaEntity pessoaEntityRetornadaPorID = pessoaService.findPersonByID(id_pessoa);
-//        emailService.sendEmail(pessoaEntityRetornadaPorID.getNome(), id_pessoa, pessoaEntityRetornadaPorID.getEmail(), POST);
-        ENDERECOPESSOA.setId_pessoa(id_pessoa);
-        EnderecoEntity ENDERECOPESSOA1 = enderecoRepository.save(ENDERECOPESSOA);
-        return objectMapper.convertValue(ENDERECOPESSOA, EnderecoDTO.class);
+    public EnderecoDTO create(Integer idPessoa, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
+        log.info("Criando EnderecoPessoa!");
+        EnderecoEntity enderecoPessoa = objectMapper.convertValue(enderecoCreateDTO, EnderecoEntity.class);
+        PessoaEntity pessoaEntityRetornadaPorID = pessoaService.findPersonByID(idPessoa);
+//        emailService.sendEmail(pessoaEntityRetornadaPorID.getNome(), idPessoa, pessoaEntityRetornadaPorID.getEmail(), POST);
+        enderecoPessoa.setIdPessoa(idPessoa);
+        enderecoPessoa.setPessoas((Set<PessoaEntity>) new ArrayList<PessoaEntity>(Set.of(pessoaEntityRetornadaPorID)));
+        EnderecoEntity enderecoPessoa1 = enderecoRepository.save(enderecoPessoa);
+        return objectMapper.convertValue(enderecoPessoa, EnderecoDTO.class);
     }
 
     // O endereço é recebido como path variable e altera as informações
@@ -42,27 +45,27 @@ public class EnderecoService {
     public EnderecoDTO update(Integer id, EnderecoCreateDTO enderecoCreateDTOAtualizar) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Atualizando endereco!");
 
-        Integer id_pessoa = findAdressByID(id).getId_pessoa();
-        PessoaEntity pessoaEntity = pessoaService.findPersonByID(id_pessoa);
+        Integer idPessoa = findAdressByID(id).getIdPessoa();
+        PessoaEntity pessoaEntity = pessoaService.findPersonByID(idPessoa);
 
         // Se o endereco existe ele retorna, senao ele estoura a exception
-        EnderecoEntity ENDERECOPESSOARecuperado = findAdressByID(id);
-        EnderecoEntity ENDERECOPESSOAAtualizar = objectMapper.convertValue(enderecoCreateDTOAtualizar, EnderecoEntity.class);
+        EnderecoEntity EnderecoPessoaRecuperado = findAdressByID(id);
+        EnderecoEntity EnderecoPessoaAtualizar = objectMapper.convertValue(enderecoCreateDTOAtualizar, EnderecoEntity.class);
 
 //        emailService.sendEmail(pessoaEntity.getNome(), id, pessoaEntity.getEmail(), PUT);
 
 
-        ENDERECOPESSOARecuperado.setTipo(ENDERECOPESSOAAtualizar.getTipo());
-        ENDERECOPESSOARecuperado.setLogradouro(ENDERECOPESSOAAtualizar.getLogradouro());
-        ENDERECOPESSOARecuperado.setNumero(ENDERECOPESSOAAtualizar.getNumero());
-        ENDERECOPESSOARecuperado.setComplemento(ENDERECOPESSOAAtualizar.getComplemento());
-        ENDERECOPESSOARecuperado.setCidade(ENDERECOPESSOAAtualizar.getCidade());
-        ENDERECOPESSOARecuperado.setEstado(ENDERECOPESSOAAtualizar.getEstado());
-        ENDERECOPESSOARecuperado.setPais(ENDERECOPESSOAAtualizar.getPais());
+        EnderecoPessoaRecuperado.setTipo(EnderecoPessoaAtualizar.getTipo());
+        EnderecoPessoaRecuperado.setLogradouro(EnderecoPessoaAtualizar.getLogradouro());
+        EnderecoPessoaRecuperado.setNumero(EnderecoPessoaAtualizar.getNumero());
+        EnderecoPessoaRecuperado.setComplemento(EnderecoPessoaAtualizar.getComplemento());
+        EnderecoPessoaRecuperado.setCidade(EnderecoPessoaAtualizar.getCidade());
+        EnderecoPessoaRecuperado.setEstado(EnderecoPessoaAtualizar.getEstado());
+        EnderecoPessoaRecuperado.setPais(EnderecoPessoaAtualizar.getPais());
 
-        EnderecoEntity ENDERECOPESSOA1 = enderecoRepository.save(ENDERECOPESSOARecuperado);
+        EnderecoEntity EnderecoPessoa1 = enderecoRepository.save(EnderecoPessoaRecuperado);
 
-        return objectMapper.convertValue(ENDERECOPESSOA1, EnderecoDTO.class);
+        return objectMapper.convertValue(EnderecoPessoa1, EnderecoDTO.class);
     }
 
     public EnderecoEntity findAdressByID(Integer id) throws RegraDeNegocioException {

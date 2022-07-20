@@ -6,7 +6,6 @@ import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
-import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.vemser.pessoaapi.service.EmailService;
 import br.com.vemser.pessoaapi.service.PessoaService;
 
@@ -33,8 +32,6 @@ import static br.com.vemser.pessoaapi.service.EmailService.POST;
 
 public class PessoaController {
 
-    @Autowired
-    private PessoaRepository pessoaRepository;
     @Autowired
     private PessoaService pessoaService;
     @Autowired
@@ -73,20 +70,20 @@ public class PessoaController {
     @GetMapping // localhost:8080/pessoa
     public List<PessoaEntity> list() {
         log.info("Listando pessoas!");
-        return pessoaRepository.findAll(); // apenas para testes.
+        return pessoaService.findAll(); //
     }
 
 
     @GetMapping("/byName")// http://localhost:8080/pessoa/byName?nome=Maicon
     public List<PessoaEntity> findByNome(@RequestParam("nome") String nome) {
         log.info("Buscando por nome!");
-        return pessoaRepository.findByNomeContainsIgnoreCase(nome);
+        return pessoaService.findByNome(nome);
     }
 
     @GetMapping("/byCpf")// http://localhost:8080/pessoa/byCpf?cpf=48863250090
     public PessoaEntity findByCpf(@RequestParam("cpf") String cpf) {
         log.info("Buscando por CPF!");
-        return pessoaRepository.findByCpf(cpf);
+        return pessoaService.findByCpf(cpf);
     }
 
 
@@ -104,8 +101,8 @@ public class PessoaController {
 //                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
 //            }
 //    )
-//    @PutMapping("/{id_pessoa}") // localhost:8080/pessoa/1000
-//    public ResponseEntity<PessoaDTO> update(@PathVariable("id_pessoa") Integer id,
+//    @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
+//    public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
 //                         @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws PessoaNulaException, RegraDeNegocioException {
 //        log.info("Tentando atualizar pessoa de id ["+id+"]");
 //        return new ResponseEntity<PessoaDTO>(pessoaService.update(id, pessoaAtualizar), HttpStatus.I_AM_A_TEAPOT);
@@ -113,8 +110,8 @@ public class PessoaController {
 
 
     @Operation(summary = "Deletar pessoa", description = "Deleta uma pessoa do banco de dados")
-    @DeleteMapping("/{id_pessoa}") // localhost:8080/pessoa/10
-    public void delete(@PathVariable("id_pessoa") Integer id) throws RegraDeNegocioException {
+    @DeleteMapping("/{idPessoa}") // localhost:8080/pessoa/10
+    public void delete(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
         log.info("Tentando deletar pessoa de id ["+id+"]");
         pessoaService.delete(id);
     }

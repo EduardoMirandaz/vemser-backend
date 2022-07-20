@@ -23,8 +23,8 @@ public class PetEntity {
     @Column(name = "id_pet")
     private Integer idPet;
 
-    @Column(name = "id_pessoa", insertable = false, updatable = false)
-    private Integer id_pessoa;
+    @Column(name = "idPessoa", insertable = false, updatable = false)
+    private Integer idPessoa;
 
     @Column(name = "nome")
     private String nome;
@@ -34,7 +34,7 @@ public class PetEntity {
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY)
              // aqui nessa tabela                       na tabela externa
-    @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
+    @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa")
     private PessoaEntity pessoa;
 
 }

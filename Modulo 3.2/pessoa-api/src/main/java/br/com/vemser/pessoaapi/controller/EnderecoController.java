@@ -58,8 +58,8 @@ public class EnderecoController {
 
 
 
-    @PostMapping("/{id_pessoa}") // localhost:8080/endereco/6
-    public EnderecoDTO post(@PathVariable("id_pessoa") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
+    @PostMapping("/{idPessoa}") // localhost:8080/endereco/6
+    public EnderecoDTO post(@PathVariable("idPessoa") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Tentando cadastrar enderecos para a pessoa de id ["+id+"]");
         return enderecoService.create(id, enderecoCreateDTO);
     }

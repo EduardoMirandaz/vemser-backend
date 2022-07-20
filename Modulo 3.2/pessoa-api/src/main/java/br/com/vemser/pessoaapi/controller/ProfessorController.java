@@ -25,24 +25,24 @@ import java.util.List;
 
 public class ProfessorController {
 
-    @Autowired
-    private ProfessorRepository professorRepository;
-    @Value("${user}")
-    private String usuario;
-    @Value("${spring.application.name}")
-    private String aplicacao;
-
-
-    @PostMapping
-    public ResponseEntity<ProfessorEntity> create(@Valid @RequestBody ProfessorEntity professor) throws TipoRequisicaoInvalido {
-        log.info("Criando professor!");
-        return new ResponseEntity<ProfessorEntity>(professorRepository.save(professor), HttpStatus.CREATED);
-    }
-
-    @GetMapping
-    public List<ProfessorEntity> list() {
-        log.info("Listando professores!");
-        return professorRepository.findAll();
-    }
+//    @Autowired
+//    private ProfessorRepository professorRepository;
+//    @Value("${user}")
+//    private String usuario;
+//    @Value("${spring.application.name}")
+//    private String aplicacao;
+//
+//
+//    @PostMapping
+//    public ResponseEntity<ProfessorEntity> create(@Valid @RequestBody ProfessorEntity professor) throws TipoRequisicaoInvalido {
+//        log.info("Criando professor!");
+//        return new ResponseEntity<ProfessorEntity>(professorRepository.save(professor), HttpStatus.CREATED);
+//    }
+//
+//    @GetMapping
+//    public List<ProfessorEntity> list() {
+//        log.info("Listando professores!");
+//        return professorRepository.findAll();
+//    }
 
 }

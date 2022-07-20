@@ -35,7 +35,7 @@ public class PessoaService {
     public PessoaDTO create(PessoaCreateDTO pessoaCreateDTO, Integer tipoRequisicao) throws TipoRequisicaoInvalido {
         PessoaEntity pessoaEntity = objectMapper.convertValue(pessoaCreateDTO, PessoaEntity.class);
         PessoaEntity pessoaEntity1 = pessoaRepository.save(pessoaEntity);
-//        emailService.sendEmail(pessoaEntity1.getNome(), pessoaEntity1.getid_pessoa(), pessoaEntity1.getEmail(), tipoRequisicao);
+//        emailService.sendEmail(pessoaEntity1.getNome(), pessoaEntity1.getidPessoa(), pessoaEntity1.getEmail(), tipoRequisicao);
         return objectMapper.convertValue(pessoaEntity, PessoaDTO.class);
     }
 
@@ -69,9 +69,20 @@ public class PessoaService {
     public PessoaEntity findPersonByID(Integer id) throws RegraDeNegocioException {
         return pessoaRepository.findAll()
                 .stream()
-                .filter(pessoaEntity -> pessoaEntity.getId_pessoa().equals(id))
+                .filter(pessoaEntity -> pessoaEntity.getIdPessoa().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("PessoaEntity não encontrada"));
     }
 
+    public List<PessoaEntity> findByNome(String nome) {
+        return pessoaRepository.findByNomeContainsIgnoreCase(nome);
+    }
+
+    public PessoaEntity findByCpf(String cpf) {
+        return pessoaRepository.findByCpf(cpf);
+    }
+
+    public List<PessoaEntity> findAll() {
+        return pessoaRepository.findAll();
+    }
 }

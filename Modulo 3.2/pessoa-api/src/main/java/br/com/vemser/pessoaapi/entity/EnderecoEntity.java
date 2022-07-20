@@ -23,8 +23,8 @@ public class EnderecoEntity {
     @Column(name = "id_endereco")
     private Integer idEndereco;
 
-    @Column(name = "id_pessoa")
-    private Integer id_pessoa;
+    @Column(name = "idPessoa")
+    private Integer idPessoa;
 
     @Column(name = "tipo")
     private TipoEndereco tipo;
@@ -56,7 +56,7 @@ public class EnderecoEntity {
     @ManyToMany()
     @JoinTable(name = "Pessoa_x_Pessoa_Endereco",
             joinColumns = @JoinColumn(name="id_endereco"),
-            inverseJoinColumns = @JoinColumn(name="id_pessoa"))
+            inverseJoinColumns = @JoinColumn(name="idPessoa"))
     private Set<PessoaEntity> pessoas;
 
     // para realizar apenas consultas posso adicionar o parâmetro mapped by

@@ -51,10 +51,10 @@ public class ContatoController {
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
     )
-    @PostMapping("/{id_pessoa}") // localhost:8080/contato/6
-    public ContatoDTO post(@PathVariable("id_pessoa") Integer id_pessoa, @Valid @RequestBody ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
-        log.info("Tentando inserir novo contato para a pessoa de id ["+id_pessoa+"]");
-        return contatoService.create(contatoCreateDTO, id_pessoa);
+    @PostMapping("/{idPessoa}") // localhost:8080/contato/6
+    public ContatoDTO post(@PathVariable("idPessoa") Integer idPessoa, @Valid @RequestBody ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
+        log.info("Tentando inserir novo contato para a pessoa de id ["+idPessoa+"]");
+        return contatoService.create(contatoCreateDTO, idPessoa);
     }
 
     @Operation(summary = "Editar contato", description = "Edita um contato e mantém ele no banco de dados")

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class PessoaDTO extends PessoaCreateDTO {
     @Schema(description = "ID da pessoa")
-    private Integer id_pessoa;
+    private Integer idPessoa;
 }

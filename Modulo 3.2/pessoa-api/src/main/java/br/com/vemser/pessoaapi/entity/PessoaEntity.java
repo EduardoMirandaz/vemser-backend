@@ -17,8 +17,8 @@ public class PessoaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PESSOA_SEQ")
     @SequenceGenerator(name = "PESSOA_SEQ", sequenceName = "seq_pessoa2", allocationSize = 1)
-    @Column(name = "id_pessoa")
-    private Integer id_pessoa;
+    @Column(name = "idPessoa")
+    private Integer idPessoa;
 
     @Column(name = "id_pet", insertable = false, updatable = false)
     private Integer idPet;
@@ -47,7 +47,7 @@ public class PessoaEntity {
     @JsonIgnore
     @ManyToMany()
     @JoinTable(name = "Pessoa_x_Pessoa_Endereco",
-            joinColumns = @JoinColumn(name="id_pessoa"),
+            joinColumns = @JoinColumn(name="idPessoa"),
             inverseJoinColumns = @JoinColumn(name="id_endereco"))
     private Set<EnderecoEntity> enderecos;
 
