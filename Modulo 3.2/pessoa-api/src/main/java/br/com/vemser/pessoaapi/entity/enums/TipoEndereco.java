@@ -1,4 +1,4 @@
-package br.com.vemser.pessoaapi.entity;
+package br.com.vemser.pessoaapi.entity.enums;
 
 import java.util.Arrays;
 

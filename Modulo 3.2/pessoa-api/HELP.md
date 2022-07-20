@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'br.com.vemser.pessoa-api' is invalid and this project uses 'br.com.vemser.pessoaapi' instead.
+* The original package name 'br.com.vemser.pessoaEntity-api' is invalid and this project uses 'br.com.vemser.pessoaapi' instead.
 
 # Getting Started
 

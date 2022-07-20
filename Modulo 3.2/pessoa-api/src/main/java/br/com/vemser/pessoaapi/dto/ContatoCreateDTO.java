@@ -1,6 +1,6 @@
 package br.com.vemser.pessoaapi.dto;
 
-import br.com.vemser.pessoaapi.entity.TipoContato;
+import br.com.vemser.pessoaapi.entity.enums.TipoContato;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -12,11 +12,6 @@ import javax.validation.constraints.Size;
 
 @Data
 public class ContatoCreateDTO {
-    @NotNull(message = "O nome não deve ser nulo")
-    @NotEmpty(message = "O nome não deve estar vazio")
-    @Schema(description = "Nome da pessoa")
-    private String nome;
-
 
     @NotNull(message = "A descrição nao pode ser nula")
     @NotEmpty(message = "A descrição nao pode estar vazia")

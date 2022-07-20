@@ -1,4 +1,4 @@
-package br.com.vemser.pessoaapi.entity;
+package br.com.vemser.pessoaapi.entity.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

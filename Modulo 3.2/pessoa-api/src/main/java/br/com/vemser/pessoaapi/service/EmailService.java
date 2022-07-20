@@ -75,13 +75,13 @@ public class EmailService {
             mimeMessageHelper.setTo(email);
             switch (tipoRequisicao){
                 case POST -> {
-                    mimeMessageHelper.setSubject("ENDERECO_PESSOA cadastrado no petshop Padawans!");
+                    mimeMessageHelper.setSubject("EnderecoEntity cadastrado no petshop Padawans!");
                 }
                 case PUT -> {
-                    mimeMessageHelper.setSubject("ENDERECO_PESSOA editado no petshop Padawans!");
+                    mimeMessageHelper.setSubject("EnderecoEntity editado no petshop Padawans!");
                 }
                 case DELETE -> {
-                    mimeMessageHelper.setSubject("ENDERECO_PESSOA deletado no petshop Padawans!");
+                    mimeMessageHelper.setSubject("EnderecoEntity deletado no petshop Padawans!");
                 }
                 default -> throw new TipoRequisicaoInvalido("Requisicao inválida!");
             }

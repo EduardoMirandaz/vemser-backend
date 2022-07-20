@@ -76,6 +76,13 @@ INSERT INTO PESSOA
 VALUES(seq_pessoa2.nextval, 'Fernanda Rosa', TO_DATE('06-05-1970', 'dd-mm-yyyy'), '01468462007', 'fernanda@dbccompany.com.br');
 
 
+CREATE TABLE Professor (
+  id_professor NUMBER NOT NULL,
+  id_universidade NUMBER NOT NULL,
+  nome varchar2(255),
+  salario NUMBER(10,2),
+  PRIMARY KEY(id_professor, id_universidade)
+);
 
 ------ contato
 
@@ -229,7 +236,7 @@ INSERT INTO PESSOA_X_PESSOA_ENDERECO
 VALUES(4, 5);
 
 
-SELECT * FROM 
+SELECT * FROM Professor
 
 
 

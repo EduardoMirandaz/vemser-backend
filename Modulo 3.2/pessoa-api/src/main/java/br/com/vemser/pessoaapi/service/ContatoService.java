@@ -2,7 +2,8 @@ package br.com.vemser.pessoaapi.service;
 
 import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.vemser.pessoaapi.dto.ContatoDTO;
-import br.com.vemser.pessoaapi.entity.Contato;
+import br.com.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.vemser.pessoaapi.repository.PessoaRepository;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -27,18 +27,16 @@ public class ContatoService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public List<ContatoDTO> list(){
-        return contatoRepository.findAll()
-                .stream()
-                .map(contato -> objectMapper.convertValue(contato, ContatoDTO.class))
-                .collect(Collectors.toList());
+    public List<ContatoEntity> list(){
+        return contatoRepository.findAll();
     }
 
-    public ContatoDTO create(ContatoCreateDTO contatCreateDTO, Integer idPessoa) throws RegraDeNegocioException {
-        Contato contato = objectMapper.convertValue(contatCreateDTO, Contato.class);
-        pessoaService.findPersonByID(idPessoa);
-        contato.setIdPessoa(idPessoa);
-        return objectMapper.convertValue(contatoRepository.save(contato), ContatoDTO.class);
+    public ContatoDTO create(ContatoCreateDTO contatCreateDTO, Integer id_pessoa) throws RegraDeNegocioException {
+        ContatoEntity contatoEntity = objectMapper.convertValue(contatCreateDTO, ContatoEntity.class);
+        PessoaEntity pessoaEntity = pessoaService.findPersonByID(id_pessoa);
+        contatoEntity.setPessoa(pessoaEntity);
+        ContatoEntity save = contatoRepository.save(contatoEntity);
+        return objectMapper.convertValue(save, ContatoDTO.class);
 
     }
 
@@ -46,28 +44,28 @@ public class ContatoService {
     // A pessoa poderá alterar as características dos contatos, mas os ids permanecem!
     public ContatoDTO update(Integer id, ContatoCreateDTO contatoCreateDTOAtualizar) throws RegraDeNegocioException {
 
-        Contato contatoRecuperado = procurarContatoPorId(id, "Id de contato não encontrado no sistema!");
+        ContatoEntity contatoEntityRecuperado = procurarContatoPorId(id, "Id de contato não encontrado no sistema!");
 
-        Contato contatoAtualizar = objectMapper.convertValue(contatoCreateDTOAtualizar, Contato.class);
+        ContatoEntity contatoEntityAtualizar = objectMapper.convertValue(contatoCreateDTOAtualizar, ContatoEntity.class);
 
-        contatoRecuperado.setNumero(contatoAtualizar.getNumero());
-        contatoRecuperado.setDescricao(contatoAtualizar.getDescricao());
-        contatoRecuperado.setTipoContato(contatoAtualizar.getTipoContato());
+        contatoEntityRecuperado.setNumero(contatoEntityAtualizar.getNumero());
+        contatoEntityRecuperado.setDescricao(contatoEntityAtualizar.getDescricao());
+        contatoEntityRecuperado.setTipoContato(contatoEntityAtualizar.getTipoContato());
 
-        return objectMapper.convertValue(contatoRepository.save(contatoRecuperado), ContatoDTO.class);
+        return objectMapper.convertValue(contatoRepository.save(contatoEntityRecuperado), ContatoDTO.class);
     }
 
     public void delete(Integer id) throws RegraDeNegocioException {
-        Contato contatoRecuperado = procurarContatoPorId(id, "Contato não encontrado");
-        contatoRepository.delete(contatoRecuperado);
+        ContatoEntity contatoEntityRecuperado = procurarContatoPorId(id, "ContatoEntity não encontrado");
+        contatoRepository.delete(contatoEntityRecuperado);
     }
 
-    private Contato procurarContatoPorId(Integer id, String Contato_nao_encontrado) throws RegraDeNegocioException {
+    private ContatoEntity procurarContatoPorId(Integer id, String Contato_nao_encontrado) throws RegraDeNegocioException {
         return contatoRepository.findAll()
                 .stream()
-                .filter(contato -> contato.getIdContato().equals(id))
+                .filter(contatoEntity -> contatoEntity.getIdContato().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException(Contato_nao_encontrado));
     }
-    
+
 }

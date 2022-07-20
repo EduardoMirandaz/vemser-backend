@@ -3,36 +3,29 @@ package br.com.vemser.pessoaapi.controller;
 
 import br.com.vemser.pessoaapi.dto.PessoaCreateDTO;
 import br.com.vemser.pessoaapi.dto.PessoaDTO;
-import br.com.vemser.pessoaapi.entity.Pessoa;
-import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
+import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
+import br.com.vemser.pessoaapi.repository.PessoaRepository;
 import br.com.vemser.pessoaapi.service.EmailService;
 import br.com.vemser.pessoaapi.service.PessoaService;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 import static br.com.vemser.pessoaapi.service.EmailService.POST;
-import static br.com.vemser.pessoaapi.service.EmailService.PUT;
-import static br.com.vemser.pessoaapi.service.EmailService.DELETE;
+
 @Validated
 @RestController // é um bean Controller
 @RequestMapping("/pessoa") // localhost:8080/pessoa
@@ -40,6 +33,8 @@ import static br.com.vemser.pessoaapi.service.EmailService.DELETE;
 
 public class PessoaController {
 
+    @Autowired
+    private PessoaRepository pessoaRepository;
     @Autowired
     private PessoaService pessoaService;
     @Autowired
@@ -53,7 +48,7 @@ public class PessoaController {
     @Operation(summary = "Criar nova pessoa", description = "Cria uma nova pessoa e insere no banco de dados")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Pessoa criada"),
+                    @ApiResponse(responseCode = "200", description = "PessoaEntity criada"),
                     @ApiResponse(responseCode = "400", description = "Requisicao inválida"),
                     @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
@@ -76,57 +71,50 @@ public class PessoaController {
             }
     )
     @GetMapping // localhost:8080/pessoa
-    public List<PessoaDTO> list() {
+    public List<PessoaEntity> list() {
         log.info("Listando pessoas!");
-        return pessoaService.list();
+        return pessoaRepository.findAll(); // apenas para testes.
+    }
+
+
+    @GetMapping("/byName")// http://localhost:8080/pessoa/byName?nome=Maicon
+    public List<PessoaEntity> findByNome(@RequestParam("nome") String nome) {
+        log.info("Buscando por nome!");
+        return pessoaRepository.findByNomeContainsIgnoreCase(nome);
+    }
+
+    @GetMapping("/byCpf")// http://localhost:8080/pessoa/byCpf?cpf=48863250090
+    public PessoaEntity findByCpf(@RequestParam("cpf") String cpf) {
+        log.info("Buscando por CPF!");
+        return pessoaRepository.findByCpf(cpf);
     }
 
 
 
-    @Operation(summary = "Listar pessoa por nome", description = "Lista uma pessoa por nome vinda do banco de dados!")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas"),
-                    @ApiResponse(responseCode = "400", description = "Pessoa nao existe"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
-    @GetMapping("/byname") // localhost:8080/pessoa/byname?nome=Rafa
-    public List<Pessoa> listByName(@RequestParam("nome") String nome) {
-        log.info("Listando resultado da busca por ["+nome+"]");
-        return pessoaService.listByName(nome);
-    }
-
-
-    @Operation(summary = "Editar pessoa", description = "Edita uma pessoa e mantém ela no banco de dados")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Pessoa editada"),
-                    @ApiResponse(responseCode = "400", description = "Pessoa nao existe"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
-    @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
-    public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
-                         @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws PessoaNulaException, RegraDeNegocioException {
-        log.info("Tentando atualizar pessoa de id ["+id+"]");
-        return new ResponseEntity<PessoaDTO>(pessoaService.update(id, pessoaAtualizar), HttpStatus.I_AM_A_TEAPOT);
-    }
+//    @ApiResponses(
+//            value = {@ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas"), @ApiResponse(responseCode = "400", description = "PessoaEntity nao existe"), @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"), @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção"), @ApiResponse(responseCode = "200", description = "PessoaEntity deletada"), @ApiResponse(responseCode = "400", description = "PessoaEntity nao existe"), @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"), @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")}
+//    )
+//
+//    @Operation(summary = "Editar pessoa", description = "Edita uma pessoa e mantém ela no banco de dados")
+//    @ApiResponses(
+//            value = {
+//                    @ApiResponse(responseCode = "200", description = "PessoaEntity editada"),
+//                    @ApiResponse(responseCode = "400", description = "PessoaEntity nao existe"),
+//                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+//                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+//            }
+//    )
+//    @PutMapping("/{id_pessoa}") // localhost:8080/pessoa/1000
+//    public ResponseEntity<PessoaDTO> update(@PathVariable("id_pessoa") Integer id,
+//                         @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws PessoaNulaException, RegraDeNegocioException {
+//        log.info("Tentando atualizar pessoa de id ["+id+"]");
+//        return new ResponseEntity<PessoaDTO>(pessoaService.update(id, pessoaAtualizar), HttpStatus.I_AM_A_TEAPOT);
+//    }
 
 
     @Operation(summary = "Deletar pessoa", description = "Deleta uma pessoa do banco de dados")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Pessoa deletada"),
-                    @ApiResponse(responseCode = "400", description = "Pessoa nao existe"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
-    @DeleteMapping("/{idPessoa}") // localhost:8080/pessoa/10
-    public void delete(@PathVariable("idPessoa") Integer id) throws RegraDeNegocioException {
+    @DeleteMapping("/{id_pessoa}") // localhost:8080/pessoa/10
+    public void delete(@PathVariable("id_pessoa") Integer id) throws RegraDeNegocioException {
         log.info("Tentando deletar pessoa de id ["+id+"]");
         pessoaService.delete(id);
     }

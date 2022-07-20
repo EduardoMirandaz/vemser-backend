@@ -1,6 +1,6 @@
 package br.com.vemser.pessoaapi.dto;
 
-import br.com.vemser.pessoaapi.entity.TipoEndereco;
+import br.com.vemser.pessoaapi.entity.enums.TipoEndereco;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;

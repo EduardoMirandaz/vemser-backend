@@ -2,11 +2,10 @@ package br.com.vemser.pessoaapi.controller;
 
 import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.vemser.pessoaapi.dto.ContatoDTO;
-import br.com.vemser.pessoaapi.entity.Contato;
+import br.com.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
@@ -37,47 +36,32 @@ public class ContatoController {
             }
     )
     @GetMapping // localhost:8080/contato
-    public List<ContatoDTO> list() {
+    public List<ContatoEntity> list() {
         log.info("Tentando listar contatos");
         return contatoService.list();
     }
 
 
-    @Operation(summary = "Listar contato por nome", description = "Lista uma contato por nome vinda do banco de dados!")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista de contatos"),
-                    @ApiResponse(responseCode = "400", description = "Pessoa nao existe"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
-    @GetMapping("/byUserId") // localhost:8080/contato/byUserId?idPessoa=3
-    public List<ContatoDTO> listById(@RequestParam("idPessoa") Integer idPessoa) throws RegraDeNegocioException {
-        log.info("Tentando listar contatos da pessoa de id ["+idPessoa+"]");
-        return contatoService.listById(idPessoa);
-    }
-
     @Operation(summary = "Criar novo contato", description = "Cria um novo contato e insere no banco de dados")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Contato criado"),
+                    @ApiResponse(responseCode = "200", description = "ContatoEntity criado"),
                     @ApiResponse(responseCode = "400", description = "Requisicao inválida"),
                     @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
     )
-    @PostMapping("/{idPessoa}") // localhost:8080/contato/6
-    public ContatoDTO post(@PathVariable("idPessoa") Integer idPessoa, @Valid @RequestBody ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
-        log.info("Tentando inserir novo contato para a pessoa de id ["+idPessoa+"]");
-        return contatoService.create(contatoCreateDTO, idPessoa);
+    @PostMapping("/{id_pessoa}") // localhost:8080/contato/6
+    public ContatoDTO post(@PathVariable("id_pessoa") Integer id_pessoa, @Valid @RequestBody ContatoCreateDTO contatoCreateDTO) throws RegraDeNegocioException {
+        log.info("Tentando inserir novo contato para a pessoa de id ["+id_pessoa+"]");
+        return contatoService.create(contatoCreateDTO, id_pessoa);
     }
 
     @Operation(summary = "Editar contato", description = "Edita um contato e mantém ele no banco de dados")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Contato editado"),
-                    @ApiResponse(responseCode = "400", description = "Contato nao existe"),
+                    @ApiResponse(responseCode = "200", description = "ContatoEntity editado"),
+                    @ApiResponse(responseCode = "400", description = "ContatoEntity nao existe"),
                     @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
@@ -92,8 +76,8 @@ public class ContatoController {
     @Operation(summary = "Deletar contato", description = "Deleta um contato do banco de dados")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "Contato deletado"),
-                    @ApiResponse(responseCode = "400", description = "Contato nao existe"),
+                    @ApiResponse(responseCode = "200", description = "ContatoEntity deletado"),
+                    @ApiResponse(responseCode = "400", description = "ContatoEntity nao existe"),
                     @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }

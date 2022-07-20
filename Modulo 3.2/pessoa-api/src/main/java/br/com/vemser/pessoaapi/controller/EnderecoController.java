@@ -37,50 +37,29 @@ public class EnderecoController {
     private String aplicacao;
 
 
-    @Operation(summary = "Listar enderecos", description = "Lista todas as enderecos do banco")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista de enderecos"),
-                    @ApiResponse(responseCode = "400", description = "Não há enderecos a serem exibidas"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
-    @GetMapping // localhost:8080/contato
-    public List<EnderecoDTO> list() {
-        log.info("Listando enderecos!");
-        return enderecoService.list();
-    }
 
     // deve ser path variable
+//    @Operation(summary = "Listar endereco por nome", description = "Lista uma endereco por nome vinda do banco de dados!")
+//    @ApiResponses(
+//            value = {
+//                    @ApiResponse(responseCode = "200", description = "Retorna a lista de enderecos"),
+//                    @ApiResponse(responseCode = "400", description = "PessoaEntity nao existe"),
+//                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+//                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+//            }
+//    )
 
-    @Operation(summary = "Listar endereco por nome", description = "Lista uma endereco por nome vinda do banco de dados!")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "Retorna a lista de enderecos"),
-                    @ApiResponse(responseCode = "400", description = "Pessoa nao existe"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
-    @GetMapping("/{id}") // localhost:8080/endereco/id
-    public List<EnderecoDTO> listById(@PathVariable("id") Integer id) throws RegraDeNegocioException {
-        log.info("Tentando listar endereco da pessoa de id ["+id+"]");
-        return enderecoService.listById(id);
+
+    @GetMapping("") // localhost:8080/endereco
+    public List<EnderecoDTO> listarTodos() throws RegraDeNegocioException, TipoRequisicaoInvalido {
+        log.info("Listando todos os endereços");
+        return enderecoService.listarTodos();
     }
 
 
-    @Operation(summary = "Criar novo endereco", description = "Cria um novo endereco e insere no banco de dados")
-    @ApiResponses(
-            value = {
-                    @ApiResponse(responseCode = "200", description = "ENDERECO_PESSOA criado"),
-                    @ApiResponse(responseCode = "400", description = "Requisicao inválida"),
-                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-            }
-    )
-    @PostMapping("/{idPessoa}") // localhost:8080/endereco/6
-    public EnderecoDTO post(@PathVariable("idPessoa") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
+
+    @PostMapping("/{id_pessoa}") // localhost:8080/endereco/6
+    public EnderecoDTO post(@PathVariable("id_pessoa") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Tentando cadastrar enderecos para a pessoa de id ["+id+"]");
         return enderecoService.create(id, enderecoCreateDTO);
     }
@@ -89,8 +68,8 @@ public class EnderecoController {
     @Operation(summary = "Editar endereco", description = "Edita um endereco e mantém ele no banco de dados")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "ENDERECO_PESSOA editado"),
-                    @ApiResponse(responseCode = "400", description = "ENDERECO_PESSOA nao existe"),
+                    @ApiResponse(responseCode = "200", description = "EnderecoEntity editado"),
+                    @ApiResponse(responseCode = "400", description = "EnderecoEntity nao existe"),
                     @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
@@ -105,8 +84,8 @@ public class EnderecoController {
     @Operation(summary = "Deletar endereco", description = "Deleta um endereco do banco de dados")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "ENDERECO_PESSOA deletado"),
-                    @ApiResponse(responseCode = "400", description = "ENDERECO_PESSOA nao existe"),
+                    @ApiResponse(responseCode = "200", description = "EnderecoEntity deletado"),
+                    @ApiResponse(responseCode = "400", description = "EnderecoEntity nao existe"),
                     @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
