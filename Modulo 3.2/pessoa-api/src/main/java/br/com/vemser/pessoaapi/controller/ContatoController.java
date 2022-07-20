@@ -36,7 +36,7 @@ public class ContatoController {
             }
     )
     @GetMapping // localhost:8080/contato
-    public List<ContatoEntity> list() {
+    public List<ContatoDTO> list() {
         log.info("Tentando listar contatos");
         return contatoService.list();
     }

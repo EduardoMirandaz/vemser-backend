@@ -27,8 +27,10 @@ public class ContatoService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public List<ContatoEntity> list(){
-        return contatoRepository.findAll();
+    public List<ContatoDTO> list(){
+        return contatoRepository.findAll().stream()
+                .map(c -> objectMapper.convertValue(c, ContatoDTO.class))
+                .toList();
     }
 
     public ContatoDTO create(ContatoCreateDTO contatCreateDTO, Integer idPessoa) throws RegraDeNegocioException {
