@@ -8,6 +8,9 @@ import javax.persistence.*;
 import java.util.Set;
 
 
+/*
+    Devo mapear aqui as colunas da minha tabela
+ */
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,9 +22,6 @@ public class EnderecoEntity {
     @SequenceGenerator(name = "ENDERECO_SEQ", sequenceName = "seq_endereco_contato", allocationSize = 1)
     @Column(name = "id_endereco")
     private Integer idEndereco;
-
-    @Column(name = "id_pessoa", insertable = false, updatable = false)
-    private Integer idPessoa;
 
     @Column(name = "tipo")
     private TipoEndereco tipo;

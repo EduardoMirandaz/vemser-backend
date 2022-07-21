@@ -29,6 +29,7 @@ public class PetEntity {
     @Column(name = "nome")
     private String nome;
 
+    @Column(name = "tipo")
     private TipoPet tipoPet;
 
     @JsonIgnore

@@ -27,12 +27,11 @@ public class EnderecoService {
     @Autowired
     private EmailService emailService;
 
-    public EnderecoDTO create(Integer idPessoa, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
+    public EnderecoDTO createEndereco(Integer idPessoa, EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException {
         log.info("Criando EnderecoPessoa!");
         EnderecoEntity enderecoPessoa = objectMapper.convertValue(enderecoCreateDTO, EnderecoEntity.class);
         PessoaEntity pessoaEntityRetornadaPorID = pessoaService.findPersonByID(idPessoa);
 //        emailService.sendEmail(pessoaEntityRetornadaPorID.getNome(), idPessoa, pessoaEntityRetornadaPorID.getEmail(), POST);
-        enderecoPessoa.setIdPessoa(idPessoa);
         enderecoPessoa.setPessoas(Set.of(pessoaEntityRetornadaPorID));
         EnderecoEntity enderecoPessoa1 = enderecoRepository.save(enderecoPessoa);
         return objectMapper.convertValue(enderecoPessoa, EnderecoDTO.class);
@@ -43,8 +42,7 @@ public class EnderecoService {
     public EnderecoDTO update(Integer id, EnderecoCreateDTO enderecoCreateDTOAtualizar) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Atualizando endereco!");
 
-        Integer idPessoa = findAdressByID(id).getIdPessoa();
-        PessoaEntity pessoaEntity = pessoaService.findPersonByID(idPessoa);
+//        PessoaEntity pessoaEntity = pessoaService.findPersonByID(idPessoa);
 
         // Se o endereco existe ele retorna, senao ele estoura a exception
         EnderecoEntity EnderecoPessoaRecuperado = findAdressByID(id);
