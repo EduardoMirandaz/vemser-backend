@@ -1,9 +1,10 @@
 package br.com.vemser.pessoaapi.service;
 
-import br.com.vemser.pessoaapi.dto.PetCreateDTO;
-import br.com.vemser.pessoaapi.dto.PetDTO;
+import br.com.vemser.pessoaapi.dto.*;
+import br.com.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.entity.PetEntity;
+import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.repository.PetRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,29 +32,35 @@ public class PetService {
                 .toList();
     }
 
-    public PetDTO create(PetCreateDTO petCreateDTO, int idPessoa) throws RegraDeNegocioException {
+    public PetDTO create(PetCreateDTO petCreateDTO, int idPessoa) throws RegraDeNegocioException, PessoaNulaException {
         PetEntity petEntity = objectMapper.convertValue(petCreateDTO, PetEntity.class);
         PessoaEntity pessoaEntity = pessoaService.findPersonByID(idPessoa);
+
         petEntity.setPessoa(pessoaEntity);
+        pessoaEntity.setPet(petEntity);
+
+        PessoaDTO savedPerson = pessoaService.update(pessoaEntity.getIdPessoa()
+                , objectMapper.convertValue(pessoaEntity, PessoaCreateDTO.class));
+
         PetEntity save = petRepository.save(petEntity);
         return objectMapper.convertValue(save, PetDTO.class);
     }
 
 
-    public PetDTO update(Integer idPet, PetCreateDTO petCreateDTOAtualizar) throws RegraDeNegocioException {
+    public PetDTO update(Integer idPet, PetUpdateDTO petUpdateDTO) throws RegraDeNegocioException {
         PetEntity petEntityRecuperado = procurarPetPorId(idPet);
 
-        PetEntity petEntityAtualizar = objectMapper.convertValue(petCreateDTOAtualizar, PetEntity.class);
+        PetEntity petEntityAtualizar = objectMapper.convertValue(petUpdateDTO, PetEntity.class);
 
         // atualizando os atributos
         petEntityRecuperado.setNome(petEntityAtualizar.getNome());
         petEntityRecuperado.setTipoPet(petEntityAtualizar.getTipoPet());
 
         // resetando as referencias
-        PessoaEntity pessoaRecuperada = pessoaService.findPersonByID(petCreateDTOAtualizar.getIdPessoa());
+        PessoaEntity pessoaRecuperada = pessoaService.findPersonByID(petEntityAtualizar.getIdPessoa());
         // nesse caso, a pessoa pode alterar o dono do pet!
         petEntityRecuperado.setPessoa(pessoaRecuperada);
-
+        petEntityRecuperado.setIdPessoa(petUpdateDTO.getIdPessoa());
         return objectMapper.convertValue(petRepository.save(petEntityRecuperado), PetDTO.class);
     }
 
@@ -64,4 +71,14 @@ public class PetService {
                 .findFirst()
                 .orElseThrow(() -> new RegraDeNegocioException("Id de pet não encontrado no sistema!"));
     }
+
+    public void delete(Integer id) throws RegraDeNegocioException {
+        try {
+            PetEntity petEntityRecuperado = procurarPetPorId(id);
+            petRepository.delete(petEntityRecuperado);
+        }catch (RegraDeNegocioException e){
+            e.printStackTrace();
+        }
+    }
+
 }

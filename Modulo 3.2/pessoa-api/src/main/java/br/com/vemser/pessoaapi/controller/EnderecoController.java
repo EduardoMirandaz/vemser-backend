@@ -105,4 +105,11 @@ public class EnderecoController {
     public void delete(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         enderecoService.delete(id);
     }
+
+    @GetMapping("/{idEndereco}")
+    public ResponseEntity<EnderecoDTO> recuperarEnderecoPorID(@PathVariable("idEndereco") Integer id) throws RegraDeNegocioException {
+        return ResponseEntity.ok(enderecoService.recuperarEnderecoPorID(id));
+    }
+
+
 }

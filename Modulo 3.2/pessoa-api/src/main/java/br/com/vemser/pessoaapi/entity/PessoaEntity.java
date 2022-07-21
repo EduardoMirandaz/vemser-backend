@@ -45,7 +45,8 @@ public class PessoaEntity {
 
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     @JoinTable(name = "Pessoa_x_Pessoa_Endereco",
             joinColumns = @JoinColumn(name="id_pessoa"),
             inverseJoinColumns = @JoinColumn(name="id_endereco"))
@@ -53,7 +54,8 @@ public class PessoaEntity {
 
 
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
     // aqui nessa tabela                       na tabela externa
     @JoinColumn(name = "id_pet", referencedColumnName = "id_pet")
     private PetEntity pet;

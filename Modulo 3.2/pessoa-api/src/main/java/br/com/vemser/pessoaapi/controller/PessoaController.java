@@ -1,8 +1,7 @@
 package br.com.vemser.pessoaapi.controller;
 
 
-import br.com.vemser.pessoaapi.dto.PessoaCreateDTO;
-import br.com.vemser.pessoaapi.dto.PessoaDTO;
+import br.com.vemser.pessoaapi.dto.*;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
@@ -73,6 +72,22 @@ public class PessoaController {
         return pessoaService.findAll(); //
     }
 
+    @Operation(summary = "Retornar a pessoa com todos os dados", description = "Retorna a pessoa completa")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "PessoaEntity criada"),
+                    @ApiResponse(responseCode = "400", description = "Requisicao inválida"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+
+    @GetMapping("/pessoa-completa")// http://localhost:8080/pessoa/pessoa?idPessoa=2
+    public List<PessoaCompletaDTO> pessoaCompleta(@RequestParam(value = "idPessoa", required = false) Integer idPessoa ) {
+        log.info("Buscando por id da pessoa!");
+        return pessoaService.list(idPessoa);
+    }
+
 
     @GetMapping("/byName")// http://localhost:8080/pessoa/byName?nome=Maicon
     public List<PessoaEntity> findByNome(@RequestParam("nome") String nome) {
@@ -115,6 +130,23 @@ public class PessoaController {
         log.info("Tentando deletar pessoa de id ["+id+"]");
         pessoaService.delete(id);
     }
+
+
+    @GetMapping("/pessoa-com-enderecos")
+    public ResponseEntity<List<PessoaEnderecoDTO>> listarComEnderecos(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return ResponseEntity.ok(pessoaService.listarComEnderecos(idPessoa));
+    }
+
+    @GetMapping("/pessoa-com-contatos")
+    public ResponseEntity<List<PessoaContatoDTO>>  listarComContatos(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return ResponseEntity.ok(pessoaService.listarComContatos(idPessoa));
+    }
+
+    @GetMapping("/pessoa-com-pet")
+    public ResponseEntity<List<PessoaPetDTO>> listarComPets(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
+        return ResponseEntity.ok(pessoaService.listarComPets(idPessoa));
+    }
+
 
 //    @GetMapping("/cpf")
 //    public List<PessoaEntity> getPessoasByCPF(@RequestParam String cpf){

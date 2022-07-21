@@ -11,8 +11,6 @@ import javax.validation.constraints.NotNull;
 @Data
 public class PetCreateDTO {
 
-    private Integer idPessoa;
-
     @NotEmpty(message = "Nome não pode estar vazio")
     @NotBlank(message = "Nome não pode estar em branco")
     @NotNull(message = "Não pode ser nulo")

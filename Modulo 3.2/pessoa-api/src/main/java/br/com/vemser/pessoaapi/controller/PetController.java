@@ -1,6 +1,7 @@
 package br.com.vemser.pessoaapi.controller;
 
 import br.com.vemser.pessoaapi.dto.*;
+import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,7 +52,8 @@ public class PetController {
             }
     )
     @PostMapping("/{idPessoa}") // localhost:8080/pet/6
-    public PetDTO post(@PathVariable("idPessoa") Integer idPessoa, @Valid @RequestBody PetCreateDTO petCreateDTO) throws RegraDeNegocioException {
+    public PetDTO post(@PathVariable("idPessoa") Integer idPessoa
+            , @Valid @RequestBody PetCreateDTO petCreateDTO) throws RegraDeNegocioException, PessoaNulaException {
         log.info("Tentando inserir novo pet para a pessoa de id ["+idPessoa+"]");
         return petService.create(petCreateDTO, idPessoa);
     }
@@ -65,10 +67,29 @@ public class PetController {
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
     )
+
+
     @PutMapping("/{idPet}") // localhost:8080/pet/1000
-    public PetDTO update(@PathVariable("idPet") Integer idPet, @RequestBody PetCreateDTO petAtualizar) throws RegraDeNegocioException {
+    public PetDTO update(@PathVariable("idPet") Integer idPet, @RequestBody PetUpdateDTO petUpdateDTO) throws RegraDeNegocioException {
         log.info("Tentando editar pet de id ["+idPet+"]");
-        return petService.update(idPet, petAtualizar);
+        return petService.update(idPet, petUpdateDTO);
     }
+
+
+    @Operation(summary = "Deletar pet", description = "Deleta um pet do banco de dados")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Pet deletado"),
+                    @ApiResponse(responseCode = "400", description = "Pet nao existe"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @DeleteMapping("/{idPet}") // localhost:8080/pet/10
+    public void delete(@PathVariable("idPet") Integer id) throws RegraDeNegocioException {
+        log.info("Tentando deletar pet de id ["+id+"]");
+        petService.delete(id);
+    }
+
 
 }

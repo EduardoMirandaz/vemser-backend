@@ -2,6 +2,7 @@ package br.com.vemser.pessoaapi.service;
 
 import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
 import br.com.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.vemser.pessoaapi.dto.PessoaDTO;
 import br.com.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
@@ -70,6 +71,14 @@ public class EnderecoService {
                 .filter(EnderecoEntity -> EnderecoEntity.getIdEndereco().equals(id))
                 .findFirst()
                 .orElseThrow( () -> new RegraDeNegocioException("Id de EnderecoEntity não cadastrado no sistema!") );
+    }
+
+
+    public EnderecoDTO recuperarEnderecoPorID(Integer id) throws RegraDeNegocioException {
+        return enderecoRepository.findById(id).stream()
+                .map(p -> objectMapper.convertValue(p, EnderecoDTO.class))
+                .findFirst()
+                .orElseThrow(() -> new RegraDeNegocioException("Endereco nao encontrado"));
     }
 
 
