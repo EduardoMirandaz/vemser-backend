@@ -4,6 +4,7 @@ import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.vemser.pessoaapi.entity.ContatoEntity;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
+import br.com.vemser.pessoaapi.entity.enums.TipoContato;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.repository.ContatoRepository;
 import br.com.vemser.pessoaapi.repository.PessoaRepository;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -70,4 +72,10 @@ public class ContatoService {
                 .orElseThrow(() -> new RegraDeNegocioException(Contato_nao_encontrado));
     }
 
+    public List<ContatoEntity> listarPessoasPorTipoDeContato(TipoContato tipoContato) {
+        return contatoRepository.findAll().stream()
+                .filter(contatoEntity -> {
+                    return contatoEntity.getTipoContato().equals(tipoContato);
+                }).collect(Collectors.toList());
+    }
 }

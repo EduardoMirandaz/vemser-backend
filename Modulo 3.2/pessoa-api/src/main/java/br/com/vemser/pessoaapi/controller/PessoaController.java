@@ -80,11 +80,11 @@ public class PessoaController {
         return pessoaService.findByNome(nome);
     }
 
-    @GetMapping("/byCpf")// http://localhost:8080/pessoa/byCpf?cpf=48863250090
-    public PessoaEntity findByCpf(@RequestParam("cpf") String cpf) {
-        log.info("Buscando por CPF!");
-        return pessoaService.findByCpf(cpf);
-    }
+//    @GetMapping("/byCpf")// http://localhost:8080/pessoa/byCpf?cpf=48863250090
+//    public PessoaEntity findByCpf(@RequestParam("cpf") String cpf) {
+//        log.info("Buscando por CPF!");
+//        return pessoaService.findByCpf(cpf);
+//    }
 
 
 
@@ -115,4 +115,12 @@ public class PessoaController {
         log.info("Tentando deletar pessoa de id ["+id+"]");
         pessoaService.delete(id);
     }
+
+//    @GetMapping("/cpf")
+//    public List<PessoaEntity> getPessoasByCPF(@RequestParam String cpf){
+//        return pessoaService.listPessoaByCPF(cpf);
+//    }
+
+//    @GetMapping("possuem-endereco")
+
 }

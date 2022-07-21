@@ -12,9 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -35,7 +33,7 @@ public class EnderecoService {
         PessoaEntity pessoaEntityRetornadaPorID = pessoaService.findPersonByID(idPessoa);
 //        emailService.sendEmail(pessoaEntityRetornadaPorID.getNome(), idPessoa, pessoaEntityRetornadaPorID.getEmail(), POST);
         enderecoPessoa.setIdPessoa(idPessoa);
-        enderecoPessoa.setPessoas((Set<PessoaEntity>) new ArrayList<PessoaEntity>(Set.of(pessoaEntityRetornadaPorID)));
+        enderecoPessoa.setPessoas(Set.of(pessoaEntityRetornadaPorID));
         EnderecoEntity enderecoPessoa1 = enderecoRepository.save(enderecoPessoa);
         return objectMapper.convertValue(enderecoPessoa, EnderecoDTO.class);
     }

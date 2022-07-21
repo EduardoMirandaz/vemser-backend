@@ -20,7 +20,7 @@ public class ContatoEntity {
     @Column(name = "id_contato")
     private Integer idContato;
 
-    @Column(name = "idPessoa", insertable = false, updatable = false)
+    @Column(name = "id_pessoa", insertable = false, updatable = false)
     private Integer idPessoa;
 
     @Column(name = "descricao")
@@ -36,7 +36,7 @@ public class ContatoEntity {
 //    FetchType.EAGER -> traz sempre que o programa roda
 //    FetchType.LAZY -> traz somente quando solicitado
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idPessoa", referencedColumnName = "idPessoa")
+    @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
     private PessoaEntity pessoa;
 
 }

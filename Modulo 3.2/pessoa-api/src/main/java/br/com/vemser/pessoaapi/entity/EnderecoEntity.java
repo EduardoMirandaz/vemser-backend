@@ -14,16 +14,13 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity(name = "ENDERECO_PESSOA")
 public class EnderecoEntity {
-
-    // Identificadores
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ENDERECO_SEQ")
-    @SequenceGenerator(name = "ENDERECO_SEQ", sequenceName = "seq_endereco2", allocationSize = 1)
+    @SequenceGenerator(name = "ENDERECO_SEQ", sequenceName = "seq_endereco_contato", allocationSize = 1)
     @Column(name = "id_endereco")
     private Integer idEndereco;
 
-    @Column(name = "idPessoa")
+    @Column(name = "id_pessoa", insertable = false, updatable = false)
     private Integer idPessoa;
 
     @Column(name = "tipo")
@@ -34,7 +31,6 @@ public class EnderecoEntity {
 
     @Column(name = "numero")
     private Integer numero;
-
 
     @Column(name = "complemento")
     private String complemento;
@@ -51,14 +47,11 @@ public class EnderecoEntity {
     @Column(name = "pais")
     private String pais;
 
-
     @JsonIgnore
-    @ManyToMany()
-    @JoinTable(name = "Pessoa_x_Pessoa_Endereco",
-            joinColumns = @JoinColumn(name="id_endereco"),
-            inverseJoinColumns = @JoinColumn(name="idPessoa"))
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "Pessoa_X_Pessoa_Endereco",
+            joinColumns = @JoinColumn(name = "id_endereco"),
+            inverseJoinColumns = @JoinColumn(name = "id_pessoa"))
     private Set<PessoaEntity> pessoas;
-
-    // para realizar apenas consultas posso adicionar o parâmetro mapped by
 
 }

@@ -50,13 +50,11 @@ public class EnderecoController {
 //    )
 
 
-    @GetMapping("") // localhost:8080/endereco
+    @GetMapping // localhost:8080/endereco
     public List<EnderecoDTO> listarTodos() throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Listando todos os endereços");
         return enderecoService.listarTodos();
     }
-
-
 
     @PostMapping("/{idPessoa}") // localhost:8080/endereco/6
     public EnderecoDTO post(@PathVariable("idPessoa") Integer id, @RequestBody @Valid EnderecoCreateDTO enderecoCreateDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {

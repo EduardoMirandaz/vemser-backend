@@ -51,7 +51,7 @@ public class PessoaService {
             throw new PessoaNulaException("Tentou inserir uma pessoa nula!");
         }
         PessoaEntity pessoaEntityAtualizar = objectMapper.convertValue(pessoaCreateDTOAtualizar, PessoaEntity.class);
-        PessoaEntity pessoaEntityRecuperada = (PessoaEntity) pessoaRepository.findAllById(Collections.singleton(id));
+        PessoaEntity pessoaEntityRecuperada = pessoaRepository.findById(id).orElseThrow( () -> new PessoaNulaException("Pessoa não existe!")  );
 
         pessoaEntityRecuperada.setCpf(pessoaEntityAtualizar.getCpf());
         pessoaEntityRecuperada.setEmail(pessoaEntityAtualizar.getEmail());
@@ -71,18 +71,25 @@ public class PessoaService {
                 .stream()
                 .filter(pessoaEntity -> pessoaEntity.getIdPessoa().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new RegraDeNegocioException("PessoaEntity não encontrada"));
+                .orElseThrow(() -> new RegraDeNegocioException("Pessoa não encontrada no banco de dados"));
     }
 
     public List<PessoaEntity> findByNome(String nome) {
         return pessoaRepository.findByNomeContainsIgnoreCase(nome);
     }
 
-    public PessoaEntity findByCpf(String cpf) {
-        return pessoaRepository.findByCpf(cpf);
-    }
 
+
+//    public PessoaEntity findByCpf(String cpf) {
+//        return pessoaRepository.findByCpf(cpf);
+//    }
+//
     public List<PessoaEntity> findAll() {
         return pessoaRepository.findAll();
     }
+
+//    public List<PessoaEntity> listPessoaByCPF(String cpf) {
+//        return pessoaRepository.listPessoaByCPF(cpf);
+//    }
+
 }

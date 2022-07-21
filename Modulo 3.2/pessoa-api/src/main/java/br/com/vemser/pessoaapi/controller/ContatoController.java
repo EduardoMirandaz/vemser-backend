@@ -3,6 +3,8 @@ package br.com.vemser.pessoaapi.controller;
 import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
 import br.com.vemser.pessoaapi.dto.ContatoDTO;
 import br.com.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.vemser.pessoaapi.entity.PessoaEntity;
+import br.com.vemser.pessoaapi.entity.enums.TipoContato;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.service.ContatoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,8 +78,8 @@ public class ContatoController {
     @Operation(summary = "Deletar contato", description = "Deleta um contato do banco de dados")
     @ApiResponses(
             value = {
-                    @ApiResponse(responseCode = "200", description = "ContatoEntity deletado"),
-                    @ApiResponse(responseCode = "400", description = "ContatoEntity nao existe"),
+                    @ApiResponse(responseCode = "200", description = "Contato deletado"),
+                    @ApiResponse(responseCode = "400", description = "Contato nao existe"),
                     @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
@@ -87,4 +89,10 @@ public class ContatoController {
         log.info("Tentando deletar contato de id ["+id+"]");
         contatoService.delete(id);
     }
+
+    @GetMapping("/{tipo-de-contato}")
+    public List<ContatoEntity> getContatosPorTipo(TipoContato tipoContato){
+        return contatoService.listarPessoasPorTipoDeContato(tipoContato);
+    }
+
 }
