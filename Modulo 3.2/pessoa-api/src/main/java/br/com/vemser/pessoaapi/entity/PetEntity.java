@@ -32,8 +32,13 @@ public class PetEntity {
     @Column(name = "tipo")
     private TipoPet tipoPet;
 
+
+
+    // o cascade CascadeType.ALL nao funciona no relacionamento 1 pra 1, entao devemos apagar de maneira forcada
     @JsonIgnore
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,
+            orphanRemoval = true,
+            cascade = CascadeType.ALL)
              // aqui nessa tabela                       na tabela externa
     @JoinColumn(name = "id_pessoa", referencedColumnName = "id_pessoa")
     private PessoaEntity pessoa;

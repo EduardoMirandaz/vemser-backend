@@ -1,12 +1,7 @@
 package br.com.vemser.pessoaapi.controller;
 
-import br.com.vemser.pessoaapi.dto.DadosPessoaisDTO;
-import br.com.vemser.pessoaapi.service.DadosPessoaisService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/dados-pessoais")

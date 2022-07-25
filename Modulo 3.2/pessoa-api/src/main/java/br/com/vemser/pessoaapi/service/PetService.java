@@ -1,7 +1,10 @@
 package br.com.vemser.pessoaapi.service;
 
-import br.com.vemser.pessoaapi.dto.*;
-import br.com.vemser.pessoaapi.entity.ContatoEntity;
+import br.com.vemser.pessoaapi.dto.Pessoas.PessoaCreateDTO;
+import br.com.vemser.pessoaapi.dto.Pessoas.PessoaDTO;
+import br.com.vemser.pessoaapi.dto.Pet.PetCreateDTO;
+import br.com.vemser.pessoaapi.dto.Pet.PetDTO;
+import br.com.vemser.pessoaapi.dto.Pet.PetUpdateDTO;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.entity.PetEntity;
 import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
@@ -18,13 +21,13 @@ import java.util.List;
 public class PetService {
 
     @Autowired
-    PetRepository petRepository;
+    private PetRepository petRepository;
 
     @Autowired
-    PessoaService pessoaService;
+    private PessoaService pessoaService;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     public List<PetDTO> list() {
         return petRepository.findAll().stream()

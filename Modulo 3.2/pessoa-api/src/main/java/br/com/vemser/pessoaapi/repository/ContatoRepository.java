@@ -1,16 +1,20 @@
 package br.com.vemser.pessoaapi.repository;
 
 import br.com.vemser.pessoaapi.entity.ContatoEntity;
-import br.com.vemser.pessoaapi.entity.PessoaEntity;
-import br.com.vemser.pessoaapi.entity.enums.TipoContato;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository                                         // entidade | tipo da chave primaria
 public interface ContatoRepository extends JpaRepository<ContatoEntity, Integer> {
+
+        @Query("SELECT c" +
+            " from CONTATO c")
+    Page<ContatoEntity> contatoPorDescricao(Pageable pageable);
+
+
 
 //    @Query("SELECT c" +
 //            " from Contato c" +

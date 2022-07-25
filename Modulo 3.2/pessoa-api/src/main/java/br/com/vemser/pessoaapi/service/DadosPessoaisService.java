@@ -1,7 +1,7 @@
 package br.com.vemser.pessoaapi.service;
 
 import br.com.vemser.pessoaapi.client.DadosPessoaisClient;
-import br.com.vemser.pessoaapi.dto.DadosPessoaisDTO;
+import br.com.vemser.pessoaapi.dto.Pessoas.DadosPessoaisDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

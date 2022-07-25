@@ -1,10 +1,8 @@
 package br.com.vemser.pessoaapi.controller;
 
 
-import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
-import br.com.vemser.pessoaapi.dto.ContatoDTO;
-import br.com.vemser.pessoaapi.dto.EnderecoCreateDTO;
-import br.com.vemser.pessoaapi.dto.EnderecoDTO;
+import br.com.vemser.pessoaapi.dto.Endereco.EnderecoCreateDTO;
+import br.com.vemser.pessoaapi.dto.Endereco.EnderecoDTO;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
 import br.com.vemser.pessoaapi.service.EmailService;

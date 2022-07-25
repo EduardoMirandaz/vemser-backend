@@ -1,9 +1,8 @@
 package br.com.vemser.pessoaapi.controller;
 
-import br.com.vemser.pessoaapi.dto.ContatoCreateDTO;
-import br.com.vemser.pessoaapi.dto.ContatoDTO;
+import br.com.vemser.pessoaapi.dto.Contato.ContatoCreateDTO;
+import br.com.vemser.pessoaapi.dto.Contato.ContatoDTO;
 import br.com.vemser.pessoaapi.entity.ContatoEntity;
-import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.entity.enums.TipoContato;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.service.ContatoService;

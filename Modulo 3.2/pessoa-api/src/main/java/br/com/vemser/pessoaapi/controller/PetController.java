@@ -1,6 +1,8 @@
 package br.com.vemser.pessoaapi.controller;
 
-import br.com.vemser.pessoaapi.dto.*;
+import br.com.vemser.pessoaapi.dto.Pet.PetCreateDTO;
+import br.com.vemser.pessoaapi.dto.Pet.PetDTO;
+import br.com.vemser.pessoaapi.dto.Pet.PetUpdateDTO;
 import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.service.PetService;
@@ -23,7 +25,7 @@ import java.util.List;
 public class PetController {
 
     @Autowired
-    PetService petService;
+    private PetService petService;
 
 
     @Operation(summary = "Listar pets", description = "Lista todas as pets do banco")

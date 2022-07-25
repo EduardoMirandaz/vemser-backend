@@ -55,6 +55,7 @@ public class PessoaEntity {
 
     @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,
+            orphanRemoval = true,
             cascade = CascadeType.ALL)
     // aqui nessa tabela                       na tabela externa
     @JoinColumn(name = "id_pet", referencedColumnName = "id_pet")

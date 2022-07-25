@@ -1,8 +1,11 @@
 package br.com.vemser.pessoaapi.controller;
 
 
-import br.com.vemser.pessoaapi.dto.*;
+import br.com.vemser.pessoaapi.dto.Pessoas.*;
+import br.com.vemser.pessoaapi.dto.Relacionamentos.PessoaEnderecoDTO;
+import br.com.vemser.pessoaapi.dto.Relacionamentos.PessoaPetDTO;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
+import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
 import br.com.vemser.pessoaapi.exceptions.TipoRequisicaoInvalido;
 import br.com.vemser.pessoaapi.service.EmailService;
@@ -57,6 +60,7 @@ public class PessoaController {
     }
 
 
+
     @Operation(summary = "Listar pessoas", description = "Lista todas as pessoas do banco")
     @ApiResponses(
             value = {
@@ -95,33 +99,21 @@ public class PessoaController {
         return pessoaService.findByNome(nome);
     }
 
-//    @GetMapping("/byCpf")// http://localhost:8080/pessoa/byCpf?cpf=48863250090
-//    public PessoaEntity findByCpf(@RequestParam("cpf") String cpf) {
-//        log.info("Buscando por CPF!");
-//        return pessoaService.findByCpf(cpf);
-//    }
-
-
-
-//    @ApiResponses(
-//            value = {@ApiResponse(responseCode = "200", description = "Retorna a lista de pessoas"), @ApiResponse(responseCode = "400", description = "PessoaEntity nao existe"), @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"), @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção"), @ApiResponse(responseCode = "200", description = "PessoaEntity deletada"), @ApiResponse(responseCode = "400", description = "PessoaEntity nao existe"), @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"), @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")}
-//    )
-//
-//    @Operation(summary = "Editar pessoa", description = "Edita uma pessoa e mantém ela no banco de dados")
-//    @ApiResponses(
-//            value = {
-//                    @ApiResponse(responseCode = "200", description = "PessoaEntity editada"),
-//                    @ApiResponse(responseCode = "400", description = "PessoaEntity nao existe"),
-//                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
-//                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
-//            }
-//    )
-//    @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
-//    public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
-//                         @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws PessoaNulaException, RegraDeNegocioException {
-//        log.info("Tentando atualizar pessoa de id ["+id+"]");
-//        return new ResponseEntity<PessoaDTO>(pessoaService.update(id, pessoaAtualizar), HttpStatus.I_AM_A_TEAPOT);
-//    }
+    @Operation(summary = "Editar pessoa", description = "Edita uma pessoa e mantém ela no banco de dados")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "PessoaEntity editada"),
+                    @ApiResponse(responseCode = "400", description = "PessoaEntity nao existe"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @PutMapping("/{idPessoa}") // localhost:8080/pessoa/1000
+    public ResponseEntity<PessoaDTO> update(@PathVariable("idPessoa") Integer id,
+                         @Valid @RequestBody PessoaCreateDTO pessoaAtualizar) throws RegraDeNegocioException, PessoaNulaException {
+        log.info("Tentando atualizar pessoa de id ["+id+"]");
+        return new ResponseEntity<PessoaDTO>(pessoaService.update(id, pessoaAtualizar), HttpStatus.I_AM_A_TEAPOT);
+    }
 
 
     @Operation(summary = "Deletar pessoa", description = "Deleta uma pessoa do banco de dados")
@@ -137,6 +129,7 @@ public class PessoaController {
         return ResponseEntity.ok(pessoaService.listarComEnderecos(idPessoa));
     }
 
+
     @GetMapping("/pessoa-com-contatos")
     public ResponseEntity<List<PessoaContatoDTO>>  listarComContatos(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.listarComContatos(idPessoa));
@@ -147,12 +140,5 @@ public class PessoaController {
         return ResponseEntity.ok(pessoaService.listarComPets(idPessoa));
     }
 
-
-//    @GetMapping("/cpf")
-//    public List<PessoaEntity> getPessoasByCPF(@RequestParam String cpf){
-//        return pessoaService.listPessoaByCPF(cpf);
-//    }
-
-//    @GetMapping("possuem-endereco")
 
 }
