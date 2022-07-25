@@ -61,7 +61,6 @@ public class PessoaController {
     }
 
 
-
     @Operation(summary = "Listar pessoas", description = "Lista todas as pessoas do banco")
     @ApiResponses(
             value = {
@@ -77,6 +76,7 @@ public class PessoaController {
         return pessoaService.findAll(); //
     }
 
+
     @Operation(summary = "Retornar a pessoa com todos os dados", description = "Retorna a pessoa completa")
     @ApiResponses(
             value = {
@@ -86,12 +86,12 @@ public class PessoaController {
                     @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
             }
     )
-
     @GetMapping("/pessoa-completa")// http://localhost:8080/pessoa/pessoa?idPessoa=2
     public List<PessoaCompletaDTO> pessoaCompleta(@RequestParam(value = "idPessoa", required = false) Integer idPessoa ) {
         log.info("Buscando por id da pessoa!");
         return pessoaService.list(idPessoa);
     }
+
 
     @Operation(summary = "Buscar pessoa por nome", description = "Busca uma pessoa pelo nome no banco de dados")
     @GetMapping("/byName")// http://localhost:8080/pessoa/byName?nome=Maicon
@@ -99,6 +99,7 @@ public class PessoaController {
         log.info("Buscando por nome!");
         return pessoaService.findByNome(nome);
     }
+
 
     @Operation(summary = "Editar pessoa", description = "Edita uma pessoa e mantém ela no banco de dados")
     @ApiResponses(
