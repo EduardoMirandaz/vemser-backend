@@ -6,6 +6,7 @@ import br.com.vemser.pessoaapi.dto.Pessoas.*;
 import br.com.vemser.pessoaapi.dto.Pet.PetDTO;
 import br.com.vemser.pessoaapi.dto.Relacionamentos.PessoaEnderecoDTO;
 import br.com.vemser.pessoaapi.dto.Relacionamentos.PessoaPetDTO;
+import br.com.vemser.pessoaapi.dto.Relatorios.RelatorioPessoaCompletaDTO;
 import br.com.vemser.pessoaapi.entity.EnderecoEntity;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
@@ -167,6 +168,13 @@ public class PessoaService {
         }
     }
 
+    public List<RelatorioPessoaCompletaDTO> exibirPessoaCompleta(){
+        return pessoaRepository.exibirPessoaCompleta();
+    }
+
+
+
+    /*** UTILS ***/
     public List<PessoaEnderecoDTO> mapPessoaEnderecoEntityToDto(Stream<PessoaEntity> peDto){
         return peDto.map(pessoaEntity -> {
             PessoaEnderecoDTO pessoaComEndereco = objectMapper.convertValue(pessoaEntity, PessoaEnderecoDTO.class);

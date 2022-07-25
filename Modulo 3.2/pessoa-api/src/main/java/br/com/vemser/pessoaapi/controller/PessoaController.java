@@ -4,6 +4,7 @@ package br.com.vemser.pessoaapi.controller;
 import br.com.vemser.pessoaapi.dto.Pessoas.*;
 import br.com.vemser.pessoaapi.dto.Relacionamentos.PessoaEnderecoDTO;
 import br.com.vemser.pessoaapi.dto.Relacionamentos.PessoaPetDTO;
+import br.com.vemser.pessoaapi.dto.Relatorios.RelatorioPessoaCompletaDTO;
 import br.com.vemser.pessoaapi.entity.PessoaEntity;
 import br.com.vemser.pessoaapi.exceptions.PessoaNulaException;
 import br.com.vemser.pessoaapi.exceptions.RegraDeNegocioException;
@@ -92,7 +93,7 @@ public class PessoaController {
         return pessoaService.list(idPessoa);
     }
 
-
+    @Operation(summary = "Buscar pessoa por nome", description = "Busca uma pessoa pelo nome no banco de dados")
     @GetMapping("/byName")// http://localhost:8080/pessoa/byName?nome=Maicon
     public List<PessoaEntity> findByNome(@RequestParam("nome") String nome) {
         log.info("Buscando por nome!");
@@ -124,21 +125,62 @@ public class PessoaController {
     }
 
 
+    @Operation(summary = "Listar pessoas com endereco", description = "Lista as pessoas do banco de dados, juntamente com seus enderecos cadastrados")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Pessoas listadas com sucesso"),
+                    @ApiResponse(responseCode = "400", description = "Nenhuma pessoa foi encontrada"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
     @GetMapping("/pessoa-com-enderecos")
     public ResponseEntity<List<PessoaEnderecoDTO>> listarComEnderecos(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.listarComEnderecos(idPessoa));
     }
 
 
+    @Operation(summary = "Listar pessoas com contato", description = "Lista as pessoas do banco de dados, juntamente com seus contatos cadastrados")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Pessoas listadas com sucesso"),
+                    @ApiResponse(responseCode = "400", description = "Nenhuma pessoa foi encontrada"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
     @GetMapping("/pessoa-com-contatos")
     public ResponseEntity<List<PessoaContatoDTO>>  listarComContatos(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.listarComContatos(idPessoa));
     }
 
+
+    @Operation(summary = "Listar pessoas com pet", description = "Lista as pessoas do banco de dados, juntamente com seus pets cadastrados")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Pessoas listadas com sucesso"),
+                    @ApiResponse(responseCode = "400", description = "Nenhuma pessoa foi encontrada"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
     @GetMapping("/pessoa-com-pet")
     public ResponseEntity<List<PessoaPetDTO>> listarComPets(@RequestParam(value = "idPessoa", required = false) Integer idPessoa) throws RegraDeNegocioException {
         return ResponseEntity.ok(pessoaService.listarComPets(idPessoa));
     }
 
 
+    @Operation(summary = "Relatorio medio das pessoas", description = "Lista as pessoas do banco de dados, com alguns atributos a mais, como por exemplo, numero de telefone, cep, cidade, estado, pais e nome do pet. ")
+    @ApiResponses(
+            value = {
+                    @ApiResponse(responseCode = "200", description = "Pessoas listadas com sucesso"),
+                    @ApiResponse(responseCode = "400", description = "Nenhuma pessoa foi encontrada"),
+                    @ApiResponse(responseCode = "403", description = "Você não tem permissão para acessar este recurso"),
+                    @ApiResponse(responseCode = "500", description = "Foi gerada uma exceção")
+            }
+    )
+    @GetMapping("/relatorio-medio")
+    public List<RelatorioPessoaCompletaDTO> exibirPessoaCompleta(){
+        return pessoaService.exibirPessoaCompleta();
+    }
 }
