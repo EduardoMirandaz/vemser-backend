@@ -1,10 +1,11 @@
-package Exercicio2;
+package Exercicios.Exercicio2;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoField;
 import java.util.Scanner;
+
+import static Exercicios.PatternValidator.isValidDate;
 
 public class Main {
     public static void main(String[] args){
@@ -12,15 +13,25 @@ public class Main {
         System.out.print("""
                 =-=-=-=-=-=-=-=-=-=
                 Insira a data 1:
-                 .: Utilize o formado dd/MM/yyyy
+                 .: Utilize o formato dd/MM/yyyy
                 ->""");
-        LocalDate data1 = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        String diaMesAno = scanner.nextLine();
+        while (!isValidDate(diaMesAno)) {
+            System.out.println("Formato de data inválido, por favor\n.: Utilize o formato dd/MM/yyyy\n->");
+            diaMesAno = scanner.nextLine();
+        }
+        LocalDate data1 = LocalDate.parse(diaMesAno, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         System.out.print("""
                 =-=-=-=-=-=-=-=-=-=
                 Insira a data 2:
-                 .: Utilize o formado dd/MM/yyyy
+                 .: Utilize o formato dd/MM/yyyy
                 ->""");
-        LocalDate data2 = LocalDate.parse(scanner.nextLine(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        diaMesAno = scanner.nextLine();
+        while (!isValidDate(diaMesAno)) {
+            System.out.println("Formato de data inválido, por favor\n.: Utilize o formato dd/MM/yyyy\n->");
+            diaMesAno = scanner.nextLine();
+        }
+        LocalDate data2 = LocalDate.parse(diaMesAno, DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         if(data1.isAfter(data2)){
             data2 = data2.plusYears(1);
         }

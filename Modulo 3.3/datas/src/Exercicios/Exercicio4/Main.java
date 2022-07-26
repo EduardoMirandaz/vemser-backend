@@ -1,11 +1,7 @@
-package Exercicio4;
+package Exercicios.Exercicio4;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.ZoneId;
-import java.time.temporal.ChronoUnit;
-import java.util.Locale;
 
 public class Main {
 

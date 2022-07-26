@@ -1,11 +1,7 @@
-package Exercicio3;
+package Exercicios.Exercicio3;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){

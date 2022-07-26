@@ -1,12 +1,17 @@
-package Exercicio1;
+package Exercicios.Exercicio1;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.time.temporal.ChronoField;
 import java.util.Scanner;
 
+import static Exercicios.PatternValidator.isValidDayMonth;
+
+
 public class Main {
+
     public static void main(String[] args){
         Scanner scanner = new Scanner(System.in);
         System.out.print("""
@@ -14,7 +19,13 @@ public class Main {
                 Insira sua data de aniversário:
                  .: Utilize o formato dd/MM
                 ->""");
-        LocalDate dataAniversario = LocalDate.parse(scanner.nextLine()+"/"+LocalDate.now().get(ChronoField.YEAR), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+
+        String diaMes = scanner.nextLine();
+        while (!isValidDayMonth(diaMes)) {
+            System.out.println("Formato de data inválido, por favor\n.: Utilize o formato dd/MM\n->");
+            diaMes = scanner.nextLine();
+        }
+        LocalDate dataAniversario = LocalDate.parse(diaMes+"/"+LocalDate.now().get(ChronoField.YEAR), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         LocalDate dataAtual = LocalDate.now();
         // Se a data atual já é posterior à data do aniversário, isto é
         // o aniversário da pessoa já passou, ela só o fará novamente no
@@ -31,4 +42,5 @@ public class Main {
         System.out.println(dias + " dias ");
         System.out.print("para o seu aniversário!");
     }
+
 }
