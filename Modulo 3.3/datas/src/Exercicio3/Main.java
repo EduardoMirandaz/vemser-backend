@@ -12,8 +12,9 @@ public class Main {
         LocalDateTime dataAtual = LocalDateTime.now();
         dataAtual = dataAtual.plusDays(15);
         dataAtual = dataAtual.plusHours(10);
-        System.out.printf("Today is ");
-        System.out.printf(dataAtual.getDayOfWeek().toString().toLowerCase(Locale.ROOT) + " and we're in the ");
+
+        System.out.printf("The day of today 15 days and 10 hours later will be wednesday ");
+        System.out.printf(dataAtual.getDayOfWeek().toString().toLowerCase(Locale.ROOT) + " and we'll be in the ");
         System.out.printf(String.valueOf(dataAtual.getDayOfYear()));
         System.out.printf("º day of the year!");
     }

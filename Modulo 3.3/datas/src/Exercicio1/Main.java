@@ -12,7 +12,7 @@ public class Main {
         System.out.print("""
                 =-=-=-=-=-=-=-=-=-=
                 Insira sua data de aniversário:
-                 .: Utilize o formado dd/MM
+                 .: Utilize o formato dd/MM
                 ->""");
         LocalDate dataAniversario = LocalDate.parse(scanner.nextLine()+"/"+LocalDate.now().get(ChronoField.YEAR), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         LocalDate dataAtual = LocalDate.now();
@@ -28,7 +28,7 @@ public class Main {
 
         System.out.println("Falta(am)");
         System.out.println(meses + " meses");
-        System.out.println(meses + " dias ");
+        System.out.println(dias + " dias ");
         System.out.print("para o seu aniversário!");
     }
 }

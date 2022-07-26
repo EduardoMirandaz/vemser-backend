@@ -32,6 +32,6 @@ public class Main {
         System.out.printf(anos + " anos ");
         System.out.printf(meses + " meses ");
         System.out.printf(dias + " dias ");
-        System.out.print(" de diferença!");
+        System.out.print("de diferença!");
     }
 }
