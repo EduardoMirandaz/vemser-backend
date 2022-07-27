@@ -39,29 +39,35 @@ public class EnderecoService {
 
     // O endereço é recebido como path variable e altera as informações
     // do mesmo, sem mudar o id da pessoa!
-    public EnderecoDTO update(Integer id, EnderecoCreateDTO enderecoCreateDTOAtualizar) throws RegraDeNegocioException, TipoRequisicaoInvalido {
+    public EnderecoDTO update(Integer id, EnderecoDTO enderecoDTO) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Atualizando endereco!");
 
-//        PessoaEntity pessoaEntity = pessoaService.findPersonByID(idPessoa);
 
         // Se o endereco existe ele retorna, senao ele estoura a exception
-        EnderecoEntity EnderecoPessoaRecuperado = findAdressByID(id);
-        EnderecoEntity EnderecoPessoaAtualizar = objectMapper.convertValue(enderecoCreateDTOAtualizar, EnderecoEntity.class);
+        EnderecoEntity enderecoPessoaRecuperadoDoBD = findAdressByID(id);
+        EnderecoEntity enderecoPessoaAtualizada = objectMapper.convertValue(enderecoDTO, EnderecoEntity.class);
+
 
 //        emailService.sendEmail(pessoaEntity.getNome(), id, pessoaEntity.getEmail(), PUT);
 
+        enderecoPessoaRecuperadoDoBD.setTipo(enderecoPessoaAtualizada.getTipo());
+        enderecoPessoaRecuperadoDoBD.setLogradouro(enderecoPessoaAtualizada.getLogradouro());
+        enderecoPessoaRecuperadoDoBD.setNumero(enderecoPessoaAtualizada.getNumero());
+        enderecoPessoaRecuperadoDoBD.setComplemento(enderecoPessoaAtualizada.getComplemento());
+        enderecoPessoaRecuperadoDoBD.setCidade(enderecoPessoaAtualizada.getCidade());
+        enderecoPessoaRecuperadoDoBD.setEstado(enderecoPessoaAtualizada.getEstado());
+        enderecoPessoaRecuperadoDoBD.setPais(enderecoPessoaAtualizada.getPais());
 
-        EnderecoPessoaRecuperado.setTipo(EnderecoPessoaAtualizar.getTipo());
-        EnderecoPessoaRecuperado.setLogradouro(EnderecoPessoaAtualizar.getLogradouro());
-        EnderecoPessoaRecuperado.setNumero(EnderecoPessoaAtualizar.getNumero());
-        EnderecoPessoaRecuperado.setComplemento(EnderecoPessoaAtualizar.getComplemento());
-        EnderecoPessoaRecuperado.setCidade(EnderecoPessoaAtualizar.getCidade());
-        EnderecoPessoaRecuperado.setEstado(EnderecoPessoaAtualizar.getEstado());
-        EnderecoPessoaRecuperado.setPais(EnderecoPessoaAtualizar.getPais());
+        // Recupero a pessoa e coloco o novo endereço nela.
+        PessoaEntity pessoaEntity = pessoaService.findPersonByID(enderecoDTO.getIdPessoa());
+        pessoaEntity.setEnderecos(Set.of());
 
-        EnderecoEntity EnderecoPessoa1 = enderecoRepository.save(EnderecoPessoaRecuperado);
+        // Coloco a pessoa no endereço
+        enderecoPessoaRecuperadoDoBD.setPessoas(Set.of(pessoaEntity));
 
-        return objectMapper.convertValue(EnderecoPessoa1, EnderecoDTO.class);
+        EnderecoEntity enderecoPessoa1 = enderecoRepository.save(enderecoPessoaRecuperadoDoBD);
+
+        return objectMapper.convertValue(enderecoPessoa1, EnderecoDTO.class);
     }
 
     public EnderecoEntity findAdressByID(Integer id) throws RegraDeNegocioException {

@@ -84,7 +84,7 @@ public class EnderecoController {
             }
     )
     @PutMapping("/{idEndereco}") // localhost:8080/endereco/1000
-    public EnderecoDTO update(@PathVariable("idEndereco") Integer idPessoa, @RequestBody @Valid EnderecoCreateDTO enderecoAtualizar) throws RegraDeNegocioException, TipoRequisicaoInvalido {
+    public EnderecoDTO update(@PathVariable("idEndereco") Integer idPessoa, @RequestBody @Valid EnderecoDTO enderecoAtualizar) throws RegraDeNegocioException, TipoRequisicaoInvalido {
         log.info("Tentando editar endereco de id ["+idPessoa+"]");
         return enderecoService.update(idPessoa, enderecoAtualizar);
     }
