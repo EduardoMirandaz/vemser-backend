@@ -14,7 +14,7 @@ public class Main {
 
 
     public static void main(String[] args){
-        LocalDateTime agora = LocalDateTime.of(2024, 9, 14, 12, 30);
+        LocalDateTime agora = LocalDateTime.now();
         long durationInSeconds = Duration.between(agora, HORA_DO_SHOW_DO_SAFADEUS_NO_BRASIL).getSeconds();
         System.out.println("Faltam::");
         int anos = 0, meses = 0, dias = 0, minutos = 0, horas = 0;
