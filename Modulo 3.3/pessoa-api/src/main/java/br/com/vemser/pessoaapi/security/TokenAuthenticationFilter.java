@@ -24,7 +24,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
 
     private final TokenService tokenService;
 
-    private static final String BEARER = "Bearer ";
+    protected static final String BEARER = "Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -33,23 +33,15 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
         //recuperar token da request
         String token = getTokenFromHeader(request);
 
+        //autenticar o usuario (se for nula o isValidToken retorna null).
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                = tokenService.isValidToken(token);
 
-        //autenticar o usuario
-        Optional<UsuarioEntity> usuarioOptional = tokenService.isValidToken(token);
-
-        if (usuarioOptional.isPresent()){
-            UsuarioEntity usuario = usuarioOptional.get();
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                    new UsernamePasswordAuthenticationToken(usuario.getLogin(), null, Collections.emptyList());
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        } else {
-            SecurityContextHolder.getContext().setAuthentication(null);
-        }
+        //setando autenticação
+        SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 
         filterChain.doFilter(request, response);
     }
-
-
 
     private String getTokenFromHeader(HttpServletRequest request){
         // Nessa função, recupero o token "Authorization" do header,
